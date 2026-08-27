@@ -1,11 +1,8 @@
 {
-  "version": 2,
-  "cleanUrls": false,
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive, nosnippet" }
       ]
@@ -15,12 +12,6 @@
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
         { "key": "Accept-Ranges", "value": "bytes" }
-      ]
-    },
-    {
-      "source": "/assets/img/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     }
   ]
