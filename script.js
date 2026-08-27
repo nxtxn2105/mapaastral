@@ -180,6 +180,26 @@ const visualTimeline=[
   [570,'mapa-astral.png'],[585,'mapa-astral-bonus1.png'],[589,'mapa-astral-bonus3.png'],[592,'mapaastral-mahila-mockup.png']
 ];
 let lastVisual='';
+let timerStarted = false;
+function startOfferCountdown(){
+  if(timerStarted) return;
+  timerStarted = true;
+  let sec = 14 * 60 + 59;
+  const el = $('#offerCountdown');
+  if(!el) return;
+  const interval = setInterval(()=>{
+    sec--;
+    if(sec <= 0){
+      clearInterval(interval);
+      el.textContent = '00:00';
+      return;
+    }
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }, 1000);
+}
+
 $('#finalAudio').addEventListener('timeupdate',e=>{
   const t=e.target.currentTime; let file='mapa-astral.png'; for(const [sec,img] of visualTimeline){if(t>=sec)file=img;else break;}
   if(file!==lastVisual){ lastVisual=file; $('#offerVisual').style.opacity='.25'; setTimeout(()=>{$('#offerVisual').src=`assets/img/${file}`;$('#offerVisual').style.opacity='1';},130); }
@@ -187,10 +207,11 @@ $('#finalAudio').addEventListener('timeupdate',e=>{
   if(t>=516 || progressState.audio.finalAudio.completed){
     $('#offerBox').classList.remove('hidden');
     $('#offerHint').classList.add('hidden');
+    startOfferCountdown();
   }
 });
 $('#finalAudio').addEventListener('play',()=>$('#offerHint').textContent='Continue ouvindo. A oferta especial será liberada durante a análise.');
-$('#finalAudio').addEventListener('ended',()=>{ $('#offerBox').classList.remove('hidden'); $('#offerHint').classList.add('hidden'); });
+$('#finalAudio').addEventListener('ended',()=>{ $('#offerBox').classList.remove('hidden'); $('#offerHint').classList.add('hidden'); startOfferCountdown(); });
 
 $('#checkoutButton').addEventListener('click',async()=>{
   await persist();
@@ -261,5 +282,36 @@ window.closeLegalModal = closeLegalModal;
     }
   });
 })();
+
+// Notificações de Prova Social em Tempo Real (Social Proof Toaster)
+const SOCIAL_PROOF_EVENTS = [
+  { name: 'Camila S. • São Paulo', action: 'Acabou de desbloquear o Mapa Astral (há 2 min)' },
+  { name: 'Mariana R. • Belo Horizonte', action: 'Adquiriu o Mapa da Alma Gêmea (há 4 min)' },
+  { name: 'Juliana F. • Curitiba', action: 'Desbloqueou o Mapa + 4 Bônus (há 1 min)' },
+  { name: 'Rodrigo M. • Rio de Janeiro', action: 'Adquiriu o Mapa Astral Completo (há 3 min)' },
+  { name: 'Amanda P. • Porto Alegre', action: 'Desbloqueou a Leitura com Desconto (há 5 min)' },
+  { name: 'Beatriz L. • Salvador', action: 'Acabou de gerar seu Mapa Astral (há 2 min)' }
+];
+function initSocialProof(){
+  const toaster = $('#socialProofToaster');
+  if(!toaster) return;
+  let idx = 0;
+  function showNext(){
+    const item = SOCIAL_PROOF_EVENTS[idx % SOCIAL_PROOF_EVENTS.length];
+    $('#spName').textContent = item.name;
+    $('#spAction').textContent = item.action;
+    toaster.style.transform = 'translateY(0)';
+    setTimeout(()=>{
+      toaster.style.transform = 'translateY(160%)';
+    }, 5200);
+    idx++;
+  }
+  setTimeout(()=>{
+    showNext();
+    setInterval(showNext, 22000);
+  }, 5000);
+}
+initSocialProof();
+
 
 

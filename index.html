@@ -38,6 +38,11 @@
       <div class="card hero-card">
         <div class="eyebrow">LEITURA PERSONALIZADA</div>
         <h1>Descubra o que o seu nascimento revela sobre você</h1>
+        <div style="display:inline-flex;align-items:center;justify-content:center;gap:8px;background:rgba(242,202,115,.1);border:1px solid rgba(242,202,115,.28);border-radius:30px;padding:6px 14px;margin-bottom:14px;font-size:12px;color:var(--gold)">
+          <span>✦ Mais de 18.400 leituras geradas</span>
+          <span>•</span>
+          <span style="color:#f2ca73">4.9 ★★★★★</span>
+        </div>
         <p class="lead">Comece pela sua data de nascimento. A partir dela, vamos identificar seu signo e a fase da Lua daquele dia.</p>
         <div class="mandala-wrap"><img src="assets/img/mandala.png" class="mandala" alt="Mandala astrológica"></div>
         <form id="birthForm" class="form-grid">
@@ -126,12 +131,12 @@
     <section class="step" data-step="5">
       <div class="card">
         <div class="eyebrow">SEU RESUMO ESTÁ PRONTO</div>
-        <h2>Onde você quer receber os dados da sua leitura?</h2>
-        <p class="lead">Seus dados ficam salvos neste navegador durante o preenchimento. Depois da compra, a página do mapa cria uma URL própria que pode ser salva e aberta em outro dispositivo.</p>
+        <h2>Para qual e-mail devemos enviar o acesso e a cópia do seu Mapa Astral?</h2>
+        <p class="lead">Seu relatório personalizado e o link de acesso permanente serão associados com segurança a este endereço.</p>
         <form id="emailForm" class="stack-form">
-          <label>E-mail<input id="email" type="email" autocomplete="email" placeholder="voce@email.com" required></label>
-          <label class="consent"><input id="consent" type="checkbox" required><span>Concordo em continuar e receber informações relacionadas à leitura.</span></label>
-          <button class="primary" type="submit">Abrir meu resultado →</button>
+          <label>Seu Melhor E-mail<input id="email" type="email" autocomplete="email" placeholder="seu-email-principal@gmail.com" required></label>
+          <label class="consent"><input id="consent" type="checkbox" required><span>Concordo em continuar e receber o acesso ao meu mapa neste e-mail.</span></label>
+          <button class="primary" type="submit">Avançar para a Análise Final →</button>
         </form>
       </div>
     </section>
@@ -172,6 +177,13 @@
             </ul>
           </div>
 
+          <!-- Timer Regressivo de Escassez -->
+          <div style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);border-radius:14px;padding:12px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:10px;color:#fca5a5;font-size:13px">
+            <span style="font-size:18px">⏳</span>
+            <span>Esta condição com 4 bônus encerra em:</span>
+            <strong id="offerCountdown" style="font-family:monospace;font-size:16px;color:#fff;background:rgba(0,0,0,.45);padding:4px 8px;border-radius:8px">14:59</strong>
+          </div>
+
           <!-- Preço Ancorado -->
           <div style="margin-bottom:20px">
             <div style="text-decoration:line-through;color:#9f95b6;font-size:15px">De R$ 497,00 por apenas:</div>
@@ -181,7 +193,7 @@
             <div style="font-size:13px;color:var(--gold);font-weight:700">ou em até 4x no cartão • Acesso Imediato & Vitalício</div>
           </div>
 
-          <button id="checkoutButton" class="checkout-btn" style="font-size:18px;padding:18px 24px">
+          <button id="checkoutButton" class="checkout-btn pulse-glow" style="font-size:18px;padding:18px 24px">
             QUERO MEU MAPA ASTRAL COMPLETO AGORA →
           </button>
           
@@ -249,7 +261,7 @@
 
           <!-- Segundo Botão de Compra -->
           <div style="margin-top:28px">
-            <button class="checkout-btn" onclick="document.getElementById('checkoutButton').click()" style="width:100%">
+            <button class="checkout-btn pulse-glow" onclick="document.getElementById('checkoutButton').click()" style="width:100%">
               GARANTIR MEU MAPA COM DESCONTO →
             </button>
           </div>
@@ -279,6 +291,13 @@
       <button onclick="closeLegalModal()" style="position:absolute;top:16px;right:16px;background:none;border:0;color:#fff;font-size:24px;cursor:pointer">&times;</button>
       <h3 id="legalModalTitle" style="color:var(--gold);margin-top:0"></h3>
       <div id="legalModalBody" style="font-size:13px;line-height:1.6;color:#c7bddc"></div>
+    </div>
+  <!-- Notificação Flutuante de Prova Social em Tempo Real -->
+  <div id="socialProofToaster" style="position:fixed;bottom:20px;left:20px;z-index:9999;background:rgba(26,12,52,.96);border:1px solid rgba(242,202,115,.45);border-radius:18px;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 12px 35px rgba(0,0,0,.7);backdrop-filter:blur(10px);transform:translateY(160%);transition:transform .5s cubic-bezier(.16,1,.3,1);max-width:320px;pointer-events:none">
+    <div style="font-size:24px;line-height:1">✨</div>
+    <div style="text-align:left">
+      <strong id="spName" style="font-size:12px;color:#fff;display:block">Camila S. • São Paulo</strong>
+      <span id="spAction" style="font-size:11px;color:#f2ca73;line-height:1.2;display:block">Acabou de desbloquear o Mapa Astral (há 2 min)</span>
     </div>
   </div>
 
