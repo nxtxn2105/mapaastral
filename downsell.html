@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <title>Última Chance: 50% de Desconto • Mahila Luz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Alerta de Urgência no Topo -->
+  <div class="upsell-alert-bar" style="background:linear-gradient(90deg,#d97706,#b45309)">
+    <span>⚠️</span>
+    <span>ÚLTIMA CHANCE: CUPOM ESPECIAL DE 50% DE DESCONTO LIBERADO!</span>
+  </div>
+
+  <main class="upsell-shell">
+    <div class="upsell-card" style="border-color:rgba(245,158,11,.45)">
+      
+      <div class="upsell-badge" style="background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.5);color:#fbbf24">
+        ✦ CONDIÇÃO ESPECIAL PARA NOVOS CLIENTES
+      </div>
+
+      <div class="timer-pill" style="border-color:rgba(245,158,11,.3);color:#fbbf24">
+        <span>Seu cupom expira em:</span>
+        <strong id="countdown">04:59</strong>
+      </div>
+
+      <h1 style="font-size:clamp(26px,5vw,38px);margin-bottom:12px">
+        <span id="userNameGreeting"></span>, eu não quero que o valor impeça você de encontrar a sua Alma Gêmea…
+      </h1>
+      
+      <p class="lead" style="margin-bottom:24px">
+        Eu sei que decisões financeiras exigem cuidado. Mas como você já deu o primeiro passo e confiou na leitura do seu <strong>Mapa Astral</strong>, decidi liberar uma autorização única: <strong>50% de desconto imediato</strong>.
+      </p>
+
+      <div class="astral-callout" style="text-align:left;background:rgba(245,158,11,.08);border-color:#f59e0b;color:#fef3c7;margin:20px 0">
+        <strong>✦ O que você vai receber nesta versão com desconto:</strong>
+        O mesmo <em>Mapa da Alma Gêmea & Sinastria Cósmica</em> completo, incluindo o signo ideal do parceiro, a janela de tempo do seu próximo encontro e os sinais para não cair em novas desilusões.
+      </div>
+
+      <div class="price-box" style="border-color:rgba(245,158,11,.4)">
+        <div class="price-was">De R$ 67,00 por apenas:</div>
+        <div class="price-now" style="color:#fbbf24"><span class="currency">R$</span> 37,00</div>
+        <div class="price-installments" style="color:#fde68a">ou em 2x de R$ 19,40 no cartão</div>
+      </div>
+
+      <!-- Botão de Compra do Downsell -->
+      <a id="acceptDownsellBtn" href="#" class="upsell-btn downsell-btn">
+        <span>SIM! QUERO APROVEITAR 50% DE DESCONTO POR APENAS R$ 37 →</span>
+      </a>
+
+      <!-- Botão de Saída Final -> Leva para Confirmação do Mapa -->
+      <div>
+        <a id="refuseDownsellBtn" href="confirmacao.html" class="refuse-link">
+          Não, obrigado. Desejo abrir mão do desconto e ir direto para o meu Mapa Astral →
+        </a>
+      </div>
+
+      <div class="security-note">
+        <span>🔒 Pagamento Criptografado • Acesso Imediato • Garantia Total de 7 Dias</span>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+  // CONFIGURAÇÃO DO CHECKOUT DO DOWNSELL
+  // Substitua pela URL do checkout do produto de Downsell (R$ 37) na Kirvano:
+  const DOWNSELL_CHECKOUT_URL = 'https://pay.kirvano.com/61c98956-e40c-41cc-a0ff-5d3bdc316ce0'; // Altere para o link do Downsell
+  const LS = 'astral_profile';
+
+  function getProfile(){
+    try {
+      const d = localStorage.getItem(LS);
+      if(d) return JSON.parse(d);
+    } catch(_){}
+    return null;
+  }
+
+  (()=>{
+    const profile = getProfile();
+    const nameGreeting = document.getElementById('userNameGreeting');
+    const firstName = profile?.firstName || 'Você';
+    nameGreeting.textContent = firstName;
+
+    // Configurar link do botão com repasse de dados
+    const acceptBtn = document.getElementById('acceptDownsellBtn');
+    const url = new URL(DOWNSELL_CHECKOUT_URL, location.href);
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','src','sck'].forEach(k=>{
+      const v = new URLSearchParams(location.search).get(k);
+      if(v) url.searchParams.set(k, v);
+    });
+    if(profile?.email) url.searchParams.set('email', profile.email);
+    if(profile?.firstName) url.searchParams.set('name', profile.firstName);
+    acceptBtn.href = url.toString();
+
+    // Timer regressivo de 5 minutos
+    let sec = 299;
+    const timerEl = document.getElementById('countdown');
+    const interval = setInterval(()=>{
+      sec--;
+      if(sec <= 0){
+        clearInterval(interval);
+        timerEl.textContent = '00:00';
+        return;
+      }
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      timerEl.textContent = `${m}:${s}`;
+    }, 1000);
+
+    // Redirecionar para confirmacao.html preservando hash e parâmetros
+    document.getElementById('refuseDownsellBtn').addEventListener('click', e=>{
+      e.preventDefault();
+      location.href = 'confirmacao.html' + location.search + location.hash;
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <title>Pagamento Confirmado • Seu Mapa Astral</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .recovery-wrap{margin-top:24px;text-align:left}
+    .recovery-wrap .form-grid{margin-top:12px}
+  </style>
+</head>
+<body>
+<main class="app-shell">
+  <section class="step active">
+    <div class="card centered" id="cardState">
+      <div class="eyebrow">PAGAMENTO CONFIRMADO</div>
+      <h1 id="statusTitle">Seu Mapa Astral está sendo preparado…</h1>
+      <p class="lead" id="statusLead">Organizando os dados da sua leitura cósmica.</p>
+      
+      <div id="recoveryBox" class="hidden recovery-wrap">
+        <p class="micro" style="margin-bottom:16px;color:#c7bddc">Se você efetuou o pagamento em outro aplicativo ou navegador, basta confirmar seus dados abaixo para gerar seu mapa imediatamente:</p>
+        <form id="recoveryForm" class="stack-form">
+          <label>Seu primeiro nome
+            <input id="recName" type="text" placeholder="Ex.: Ana" required maxlength="40">
+          </label>
+          <div class="form-grid">
+            <label>Dia<select id="recDay" required></select></label>
+            <label>Mês<select id="recMonth" required></select></label>
+            <label>Ano<select id="recYear" required></select></label>
+          </div>
+          <div class="location-grid">
+            <label>Cidade de nascimento
+              <input id="recCity" type="text" placeholder="Ex.: São Paulo" required maxlength="80">
+            </label>
+            <label>Horário (opcional)
+              <input id="recTime" type="time">
+            </label>
+          </div>
+          <button class="primary full" type="submit" style="margin-top:8px">Gerar e Abrir Meu Mapa Astral →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+const LS = 'astral_profile';
+
+const signs = [
+  {key:'capricornio',name:'Capricórnio',start:[12,22],end:[1,19]}, {key:'aquario',name:'Aquário',start:[1,20],end:[2,18]},
+  {key:'peixes',name:'Peixes',start:[2,19],end:[3,20]}, {key:'aries',name:'Áries',start:[3,21],end:[4,19]},
+  {key:'touro',name:'Touro',start:[4,20],end:[5,20]}, {key:'gemeos',name:'Gêmeos',start:[5,21],end:[6,21]},
+  {key:'cancer',name:'Câncer',start:[6,22],end:[7,22]}, {key:'leao',name:'Leão',start:[7,23],end:[8,22]},
+  {key:'virgem',name:'Virgem',start:[8,23],end:[9,22]}, {key:'libra',name:'Libra',start:[9,23],end:[10,22]},
+  {key:'escorpiao',name:'Escorpião',start:[10,23],end:[11,21]}, {key:'sagitario',name:'Sagitário',start:[11,22],end:[12,21]}
+];
+
+const moonMap = {
+  nova:{name:'Lua Nova',symbol:'●'}, crescente:{name:'Lua Crescente',symbol:'◐'},
+  cheia:{name:'Lua Cheia',symbol:'○'}, minguante:{name:'Lua Minguante',symbol:'◑'}
+};
+
+function getSign(month,day){
+  if((month===12&&day>=22)||(month===1&&day<=19)) return signs[0];
+  return signs.find(s=>{ const [sm,sd]=s.start,[em,ed]=s.end; return sm===em?month===sm&&day>=sd&&day<=ed:(month===sm&&day>=sd)||(month===em&&day<=ed); }) || signs[0];
+}
+
+function moonPhase8(year,month,day){ let c,e,jd,b;if(month<3){year--;month+=12}month++;c=365.25*year;e=30.6*month;jd=c+e+day-694039.09;jd/=29.5305882;b=parseInt(jd);jd-=b;b=Math.round(jd*8);if(b>=8)b=0;return b; }
+function getMoon(year,month,day){ const p=moonPhase8(year,month,day); if(p===0)return {key:'nova',...moonMap.nova}; if(p>=1&&p<=3)return {key:'crescente',...moonMap.crescente}; if(p===4)return {key:'cheia',...moonMap.cheia}; return {key:'minguante',...moonMap.minguante}; }
+
+function utf8ToB64Url(str){
+  const b64 = btoa(unescape(encodeURIComponent(str)));
+  return b64.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+
+function getProfile(){
+  try{
+    const local = localStorage.getItem(LS);
+    if(local) return JSON.parse(local);
+  }catch(_){}
+  return null;
+}
+
+function initRecoveryDate(){
+  document.getElementById('recDay').innerHTML = '<option value="">Dia</option>' + Array.from({length:31},(_,i)=>`<option>${i+1}</option>`).join('');
+  document.getElementById('recMonth').innerHTML = '<option value="">Mês</option>' + ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'].map((m,i)=>`<option value="${i+1}">${m}</option>`).join('');
+  const now = new Date().getFullYear();
+  document.getElementById('recYear').innerHTML = '<option value="">Ano</option>' + Array.from({length:now-1920+1},(_,i)=>now-i).map(y=>`<option>${y}</option>`).join('');
+}
+
+(()=>{
+  try { localStorage.setItem('astral_paid', '1'); } catch(_){}
+  const profile = getProfile();
+  if(profile && profile.birth && profile.firstName){
+    const payload = utf8ToB64Url(JSON.stringify(profile));
+    setTimeout(()=>{
+      location.replace('mapa.html?pago=1#d='+payload);
+    }, 800);
+    return;
+  }
+
+  // Fallback: Exibir formulário de recuperação
+  document.getElementById('statusTitle').textContent = 'Confirmando seus dados';
+  document.getElementById('statusLead').textContent = 'Seu acesso foi liberado! Confirme seus dados para montar seu Mapa Astral:';
+  document.getElementById('recoveryBox').classList.remove('hidden');
+  initRecoveryDate();
+
+  document.getElementById('recoveryForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const name = document.getElementById('recName').value.trim();
+    const d = +document.getElementById('recDay').value;
+    const m = +document.getElementById('recMonth').value;
+    const y = +document.getElementById('recYear').value;
+    const city = document.getElementById('recCity').value.trim();
+    const time = document.getElementById('recTime').value;
+
+    if(!name || !d || !m || !y || !city) return alert('Por favor, preencha os campos obrigatórios.');
+
+    const newProfile = {
+      v: 2,
+      firstName: name.replace(/\s+.*/,''),
+      birth: { day: d, month: m, year: y },
+      birthCity: city,
+      birthState: '',
+      birthCountry: 'Brasil',
+      birthTime: time || '',
+      timeKnown: time ? 'yes' : 'no',
+      sign: getSign(m, d),
+      moon: getMoon(y, m, d)
+    };
+
+    try { localStorage.setItem(LS, JSON.stringify(newProfile)); } catch(_){}
+    const payload = utf8ToB64Url(JSON.stringify(newProfile));
+    location.replace('mapa.html?pago=1#d='+payload);
+  });
+})();
+</script>
+</body>
+</html>

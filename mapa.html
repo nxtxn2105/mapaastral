@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <title>Seu Mapa Astral Personalizado • Mahila Luz</title>
+  <meta name="description" content="Seu Mapa Astral completo com análise do Sol, Lua, Ascendente, Casas e previsões personalizadas.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="map-view">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">✦</span>
+      <span>Mahila Luz • Mapa Astral</span>
+    </div>
+    <div class="map-topbar-actions">
+      <button type="button" class="btn-action primary-action" id="printBtn" title="Salvar como PDF ou Imprimir">
+        <span>🖨️</span><span>Salvar PDF</span>
+      </button>
+      <button type="button" class="btn-action" id="copyLinkBtn" title="Copiar link seguro para reabrir futuramente">
+        <span>🔗</span><span>Copiar Link</span>
+      </button>
+      <button type="button" class="btn-action" id="shareWaBtn" title="Compartilhar no WhatsApp">
+        <span>📱</span><span>Compartilhar</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="app-shell" style="min-height:auto">
+    <div class="map-container">
+
+      <!-- Estado: Carregando -->
+      <div id="mapLoading" class="card centered">
+        <h1>Montando seu mapa…</h1>
+        <p class="lead">Calculando as posições celestes e interpretando sua assinatura cósmica.</p>
+      </div>
+
+      <!-- Estado: Bloqueado / Sem dados -->
+      <div id="mapBlocked" class="card centered hidden">
+        <div class="eyebrow">DADOS NÃO LOCALIZADOS</div>
+        <h2>Não foi possível abrir este mapa</h2>
+        <p class="lead">A URL está incompleta ou os dados não foram encontrados neste navegador.</p>
+        <a href="confirmacao.html" class="primary" style="display:inline-block;margin-top:10px;text-decoration:none">Confirmar Meus Dados →</a>
+      </div>
+
+      <!-- Estado: Pronto / Relatório Completo -->
+      <div id="mapReady" class="hidden" style="display:contents">
+        
+        <!-- Cartão Hero com Perfil e Mandala -->
+        <section class="hero-profile-card">
+          <div class="eyebrow">LEITURA COMPLETA E INDIVIDUAL</div>
+          <h1 id="heroTitle" style="margin-bottom:8px">Mapa Astral de [Nome]</h1>
+          <p class="lead" id="heroSummary" style="margin-bottom:14px"></p>
+
+          <div class="profile-meta" id="profileBadges">
+            <!-- Injetado dinamicamente -->
+          </div>
+
+          <!-- Mandala Zodiacal em SVG Interativo -->
+          <div class="wheel-container">
+            <svg class="wheel-svg" viewBox="0 0 300 300">
+              <circle cx="150" cy="150" r="140" fill="none" stroke="rgba(242,202,115,.2)" stroke-width="1.5"/>
+              <circle cx="150" cy="150" r="115" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+              <circle cx="150" cy="150" r="85" fill="none" stroke="rgba(125,92,255,.2)" stroke-width="1"/>
+              <!-- Linhas dos 12 signos -->
+              <g stroke="rgba(255,255,255,.12)" stroke-width="1">
+                <line x1="150" y1="10" x2="150" y2="290"/>
+                <line x1="10" y1="150" x2="290" y2="150"/>
+                <line x1="51" y1="51" x2="249" y2="249"/>
+                <line x1="249" y1="51" x2="51" y2="249"/>
+                <line x1="26" y1="85" x2="274" y2="215"/>
+                <line x1="26" y1="215" x2="274" y2="85"/>
+              </g>
+              <!-- Símbolos dos Signos -->
+              <g fill="#f2ca73" font-size="12" font-weight="bold" text-anchor="middle" dominant-baseline="central">
+                <text x="150" y="24">♈</text>
+                <text x="213" y="41">♉</text>
+                <text x="259" y="87">♊</text>
+                <text x="276" y="150">♋</text>
+                <text x="259" y="213">♌</text>
+                <text x="213" y="259">♍</text>
+                <text x="150" y="276">♎</text>
+                <text x="87" y="259">♏</text>
+                <text x="41" y="213">♐</text>
+                <text x="24" y="150">♑</text>
+                <text x="41" y="87">♒</text>
+                <text x="87" y="41">♓</text>
+              </g>
+            </svg>
+            <div class="wheel-center-core">
+              <span class="wheel-core-symbol" id="coreSymbol">✦</span>
+              <span class="wheel-core-label" id="coreLabel">SOL</span>
+            </div>
+          </div>
+
+          <p class="micro" style="max-width:540px;margin:0 auto">Este mapa foi gerado a partir da sua longitude temporal de nascimento e decodifica as energias arquetípicas da sua jornada evolutiva.</p>
+
+          <!-- Resumo dos Planetas e Pontos Chave -->
+          <div class="planets-summary-grid" id="planetsGrid">
+            <!-- Preenchido via JS -->
+          </div>
+        </section>
+
+        <!-- Equilíbrio dos Elementos -->
+        <section class="elements-bar-card">
+          <div class="eyebrow" style="margin-bottom:6px">ALQUIMIA DOS ELEMENTOS</div>
+          <h3 style="margin-bottom:6px">Distribuição dos 4 Elementos no seu Mapa</h3>
+          <p class="lead" style="margin:0;font-size:14px">Cada elemento governa uma dimensão do seu ser: paixão, matéria, intelecto e emoção.</p>
+          <div class="elements-grid" id="elementsGrid">
+            <!-- Preenchido via JS -->
+          </div>
+        </section>
+
+        <!-- Capítulos de Leitura Personalizada -->
+        <div id="chaptersContainer" style="display:flex;flex-direction:column;gap:28px">
+          <!-- Injetado dinamicamente via JS -->
+        </div>
+
+        <!-- Ritual Pessoal de Harmonização -->
+        <section class="chapter-card ritual-card" id="ritualSection">
+          <!-- Injetado dinamicamente via JS -->
+        </section>
+
+        <!-- Seção de Expansão: O Mapa da Alma Gêmea -->
+        <section class="chapter-card" style="border:1px solid rgba(242,202,115,.4);background:linear-gradient(180deg,rgba(56,26,98,.9),rgba(26,12,52,.95))">
+          <span class="chapter-tag" style="color:var(--gold)">✦ Expansão Cósmica do seu Mapa</span>
+          <h2 class="chapter-title" style="margin-bottom:12px">Deseja desvendar o Mapa da sua Alma Gêmea?</h2>
+          <p class="chapter-lead">Uma leitura aprofundada da sua Casa 7 e de Vênus para revelar o signo, as características e o período astrológico propício para o seu próximo encontro de almas.</p>
+          <div class="astral-highlight" style="margin:16px 0 22px">
+            <p style="margin:0">Descubra com quem você tem atração magnética real e como quebrar de vez padrões kármicos repetitivos nos relacionamentos.</p>
+          </div>
+          <div style="text-align:center">
+            <a href="downsell.html" class="primary" style="display:inline-block;padding:16px 32px;text-decoration:none;font-size:16px;border-radius:14px">
+              Desbloquear Meu Mapa da Alma Gêmea (R$ 37) →
+            </a>
+          </div>
+        </section>
+
+        <!-- Rodapé do Mapa -->
+        <footer class="map-footer">
+          <div class="map-footer-brand">✦ Mahila Luz • Leituras Cósmicas</div>
+          <p>Leitura interpretativa baseada em princípios da astrologia psicológica e arquetípica.<br>Guarde esta página nos favoritos ou salve o arquivo PDF para consultas futuras ao longo do seu ano.</p>
+          <div class="map-footer-actions" style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <button type="button" class="btn-action primary-action" onclick="window.print()">🖨️ Salvar em PDF</button>
+            <button type="button" class="btn-action" onclick="copyCurrentLink()">🔗 Copiar Link Permanente</button>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+  /* ==========================================================================
+     MOTOR ASTROLÓGICO E INTERPRETAÇÃO (MAHILA LUZ)
+     ========================================================================== */
+
+  const SIGNS_DATA = {
+    aries: {
+      name: 'Áries', symbol: '♈', element: 'Fogo', quality: 'Cardinal', ruler: 'Marte',
+      keyword: 'Iniciativa e Coragem',
+      essence: 'Você carrega a faísca primordial do zodíaco. O Sol em Áries confere uma força vital pulsante, capacidade de desbravar territórios desconhecidos e uma sinceridade desarmante. Você nasceu para liderar pelo exemplo de quem não teme começar do zero.',
+      shadow: 'A impaciência e o impulso de abandonar projetos na metade quando a excitação inicial se dissipa. A tendência a agir antes de ponderar os impactos emocionais nos outros.',
+      mission: 'Aprender a direcionar sua imensa coragem não em batalhas desnecessárias, mas na abertura de caminhos que inspirem e empoderem as pessoas ao seu redor.',
+      stone: 'Jaspe Vermelho', herb: 'Gengibre & Pimenta-rosa',
+      affirmation: 'Minha coragem abre portas sagradas. Eu inicio com paixão e concluo com sabedoria.'
+    },
+    touro: {
+      name: 'Touro', symbol: '♉', element: 'Terra', quality: 'Fixo', ruler: 'Vênus',
+      keyword: 'Constância e Prosperidade',
+      essence: 'Seu Sol em Touro ancora a estabilidade, o bom gosto e o magnetismo material. Você possui uma inteligência sensorial refinada, paciência para construir legados duradouros e uma lealdade inegociável àqueles que ama.',
+      shadow: 'A resistência ferrenha a mudanças necessárias e o apego excessivo a rotinas ou coisas materiais por medo da escassez.',
+      mission: 'Compreender que a sua verdadeira segurança reside no seu próprio valor interno, permitindo que a vida flua sem a necessidade de controlar cada detalhe.',
+      stone: 'Quartzo Verde / Esmeralda', herb: 'Lavanda & Baunilha',
+      affirmation: 'Eu sou um ímã de abundância e paz. Confio no ritmo perfeito da vida e acolho as renovações.'
+    },
+    gemeos: {
+      name: 'Gêmeos', symbol: '♊', element: 'Ar', quality: 'Mutável', ruler: 'Mercúrio',
+      keyword: 'Comunicação e Versatilidade',
+      essence: 'Com o Sol em Gêmeos, sua mente é um laboratório constante de conexões, curiosidade e inteligência viva. Você tem o dom da palavra, a facilidade de transitar entre mundos diferentes e um eterno frescor de juventude de espírito.',
+      shadow: 'Dispersão de energia, ansiedade mental por excesso de estímulos e superficialidade em conversas que exigem presença emocional profunda.',
+      mission: 'Transformar a torrente de informações em sabedoria prática, tornando-se uma ponte de esclarecimento e conexão genuína entre as pessoas.',
+      stone: 'Ágata Azul / Citrino', herb: 'Hortelã-pimenta & Alecrim',
+      affirmation: 'Minha mente é clara, focada e criativa. Comunico a minha verdade com leveza e profundidade.'
+    },
+    cancer: {
+      name: 'Câncer', symbol: '♋', element: 'Água', quality: 'Cardinal', ruler: 'Lua',
+      keyword: 'Sensibilidade e Nutrição',
+      essence: 'Você possui um radar intuitivo extraordinário. O Sol em Câncer carrega o poder de criar lares emocionais, acolher com generosidade e lembrar que a vulnerabilidade é uma das maiores formas de coragem humana.',
+      shadow: 'Apegos ao passado, flutuações repentinas de humor e a armadura protetora que afasta quem tenta se aproximar por medo de rejeição.',
+      mission: 'Cuidar de si com a mesma devoção com que cuida dos outros, estabelecendo limites saudáveis que protejam seu coração sem fechar suas portas.',
+      stone: 'Pedra da Lua / Quartzo Rosa', herb: 'Camomila & Jasmim',
+      affirmation: 'Minha sensibilidade é minha maior força. Honro meu passado e floresço com segurança no presente.'
+    },
+    leao: {
+      name: 'Leão', symbol: '♌', element: 'Fogo', quality: 'Fixo', ruler: 'Sol',
+      keyword: 'Expressão e Magnetismo',
+      essence: 'Você tem o Sol em seu domicílio natural: nasceu para irradiar calor, generosidade e liderança carismática. Seu coração é imenso e sua presença ilumina os ambientes com criatividade e dignidade inatas.',
+      shadow: 'A dependência velada da aprovação alheia e o orgulho que impede de reconhecer fragilidades ou pedir ajuda.',
+      mission: 'Lembrar que o verdadeiro Sol brilha sem exigir aplausos; sua missão é aquecer o mundo e incentivar os outros a também encontrarem sua própria luz.',
+      stone: 'Olho de Tigre / Pirita', herb: 'Laranja Doce & Canela',
+      affirmation: 'Eu brilho com autenticidade, generosidade e amor. Minha luz natural abre todos os meus caminhos.'
+    },
+    virgem: {
+      name: 'Virgem', symbol: '♍', element: 'Terra', quality: 'Mutável', ruler: 'Mercúrio',
+      keyword: 'Aperfeiçoamento e Devoção',
+      essence: 'Seu Sol em Virgem concede um olhar clínico para o que pode ser aprimorado, senso de utilidade prática e dedicação ética admirável. Você organiza o caos com maestria e encontra beleza nos detalhes mais sutis.',
+      shadow: 'Autocrítica impiedosa, perfeccionismo paralisante e a tendência a se sobrecarregar cuidando de problemas que pertencem a outras pessoas.',
+      mission: 'Compreender que o imperfeito também é sagrado; acolher a si com compaixão e usar seus dons analíticos para servir com leveza.',
+      stone: 'Amazonita / Jaspe Verde', herb: 'Erva-cidreira & Manjericão',
+      affirmation: 'Eu sou suficiente exatamente como sou. Acolho a perfeição da minha jornada com serenidade.'
+    },
+    libra: {
+      name: 'Libra', symbol: '♎', element: 'Ar', quality: 'Cardinal', ruler: 'Vênus',
+      keyword: 'Harmonia e Diplomacia',
+      essence: 'O Sol em Libra confere elegância nata, talento para pacificar conflitos e uma busca incessante pela justiça e beleza. Você é um arquiteto de pontes humanas e sabe valorizar a perspectiva do outro como ninguém.',
+      shadow: 'Indecisão crônica por medo de desagradar e a renúncia das próprias vontades para manter uma paz externa artificial.',
+      mission: 'Desenvolver a firmeza de posicionamento interno, entendendo que a verdadeira harmonia só existe quando você é fiel a si mesmo em primeiro lugar.',
+      stone: 'Quartzo Rosa / Lápis-lazúli', herb: 'Rosas Brancas & Melissa',
+      affirmation: 'Eu honro meus desejos com firmeza e graciosidade. Crio relacionamentos equilibrados e verdadeiros.'
+    },
+    escorpiao: {
+      name: 'Escorpião', symbol: '♏', element: 'Água', quality: 'Fixo', ruler: 'Plutão',
+      keyword: 'Transformação e Poder Oculto',
+      essence: 'Você possui uma das assinaturas mais poderosas do zodíaco. O Sol em Escorpião enxerga além das aparências, regenera-se de qualquer cinza e carrega uma lealdade inabalável e magnetismo visceral.',
+      shadow: 'Desconfiança instintiva, necessidade de controlar o incontrolável e retenção de mágoas antigas que pesam na alma.',
+      mission: 'Usar seu poder alquímico para perdoar e renascer continuamente, tornando-se um curador de si e um farol de profundidade para o mundo.',
+      stone: 'Obsidiana / Granada', herb: 'Sálvia Branca & Mirra',
+      affirmation: 'Eu libero o passado e me permito renascer. Minha vulnerabilidade é a chave do meu magnetismo.'
+    },
+    sagitario: {
+      name: 'Sagitário', symbol: '♐', element: 'Fogo', quality: 'Mutável', ruler: 'Júpiter',
+      keyword: 'Expansão e Sabedoria',
+      essence: 'Seu Sol em Sagitário traz uma sede inesgotável de horizontes amplos, verdades filosóficas e liberdade de voo. Seu otimismo contagia e sua presença expande a mente de quem caminha ao seu lado.',
+      shadow: 'Dogmatismo disfarçado de convicção, promessas maiores do que se pode cumprir e a fuga de compromissos cotidianos por medo de se sentir preso.',
+      mission: 'Integrar os grandes voos filosóficos com a presença disciplinada no dia a dia, tornando a sabedoria uma prática viva e inspiradora.',
+      stone: 'Sodalita / Ametista', herb: 'Eucalipto & Louro',
+      affirmation: 'O universo conspira para a minha expansão. Caminho com fé, liberdade e sabedoria.'
+    },
+    capricornio: {
+      name: 'Capricórnio', symbol: '♑', element: 'Terra', quality: 'Cardinal', ruler: 'Saturno',
+      keyword: 'Estrutura e Mestria',
+      essence: 'Com o Sol em Capricórnio, você carrega a perseverança dos construtores de montanhas. Possui senso de integridade admirável, maturidade emocional precoce e capacidade de transformar sonhos em legados concretos.',
+      shadow: 'Pessimismo defensivo, rigidez consigo mesmo e a crença silenciosa de que precisa carregar o peso do mundo sozinho nos ombros.',
+      mission: 'Aprender que o sucesso verdadeiro inclui alegria e descanso; permitir-se celebrar as conquistas e confiar na leveza do caminho.',
+      stone: 'Ônix / Turmalina Negra', herb: 'Alecrim & Cedro',
+      affirmation: 'Construo meu sucesso sobre alicerces sólidos e amorosos. Permito-me prosperar com paz e leveza.'
+    },
+    aquario: {
+      name: 'Aquário', symbol: '♒', element: 'Ar', quality: 'Fixo', ruler: 'Urano',
+      keyword: 'Inovação e Autenticidade',
+      essence: 'O Sol em Aquário faz de você uma mente à frente do seu tempo. Você valoriza a liberdade acima de convenções vazias, enxerga o coletivo com compaixão e tem coragem de ser único sem pedir desculpas.',
+      shadow: 'Distanciamento afetivo, rebeldia por teimosia e a dificuldade de lidar com a vulnerabilidade e os dramas do coração.',
+      mission: 'Unir seu intelecto revolucionário ao calor humano do coração, liderando causas que libertem e elevem a consciência de todos.',
+      stone: 'Água-marinha / Fluorita', herb: 'Capim-limão & Bergamota',
+      affirmation: 'Eu celebro a minha autenticidade. Minha visão inovadora abre caminhos de liberdade e amor.'
+    },
+    peixes: {
+      name: 'Peixes', symbol: '♓', element: 'Água', quality: 'Mutável', ruler: 'Netuno',
+      keyword: 'Transcendência e Empatia',
+      essence: 'Você é um canal entre os mundos visível e invisível. O Sol em Peixes concede uma empatia quase mística, imaginação criativa fértil e uma conexão natural com a espiritualidade e as artes da alma.',
+      shadow: 'Fuga da realidade para fantasias ou vitimismo, dificuldade em dizer não e tendência a absorver as dores do mundo sem se proteger.',
+      mission: 'Ancorar sua imensa compaixão em ações práticas no mundo real, mantendo limites energéticos claros para que sua luz brilhe sem se esgotar.',
+      stone: 'Ametista / Quartzo Transparente', herb: 'Lavanda & Olíbano',
+      affirmation: 'Estou protegido e conectado com a fonte divina. Minha intuição é bússola infalível de luz.'
+    }
+  };
+
+  const MOON_PHASE_DATA = {
+    nova: {
+      title: 'Lua Nova • O Mistério da Semente Cósmica',
+      description: 'Você nasceu sob a noite escura e fértil da Lua Nova. Isso significa que suas emoções brotam de um núcleo interno profundo e intuitivo. Você possui uma capacidade única de recomeçar do zero quantas vezes forem necessárias, renovando suas forças no silêncio e na intimidade.',
+      need: 'Momentos regulares de recolhimento para silenciar o ruído externo e sintonizar com a voz sutil da sua intuição.',
+      gift: 'Poder de manifestação por intenção pura e pureza instintiva de sentimentos.'
+    },
+    crescente: {
+      title: 'Lua Crescente • A Força do Impulso e Crescimento',
+      description: 'Nascido sob a Lua Crescente, você traz no sangue o chamado à ação e superação de barreiras. Suas emoções são dinâmicas e buscam expressão concreta no mundo. Quando você decide algo, enfrenta resistências com uma garra invejável.',
+      need: 'Sentir que está avançando rumo a metas tangíveis e autonomia emocional para traçar seus passos.',
+      gift: 'Resiliência inabalável diante de crises e coragem para romper a inércia.'
+    },
+    cheia: {
+      title: 'Lua Cheia • A Luz Total das Revelações e Vínculos',
+      description: 'Você veio ao mundo sob o ápice do magnetismo celeste: a Lua Cheia. Suas emoções são intensas, luminosas e diretamente ligadas às suas relações. Você sente o mundo com a intensidade de um espelho polido, atraindo pessoas que revelam partes do seu próprio ser.',
+      need: 'Relacionamentos de alma com transparência total e expressão criativa para suas marés emocionais.',
+      gift: 'Magnetismo relacional nato, empatia magnânima e capacidade de iluminar o caminho de outros.'
+    },
+    minguante: {
+      title: 'Lua Minguante • A Sabedoria da Colheita e do Desapego',
+      description: 'Você nasceu quando a Lua recolhia sua luz para integrar as lições do ciclo. Você possui uma maturidade de alma nata, grande capacidade de síntese e uma habilidade instintiva de discernir o que vale a pena manter e o que deve ser liberado.',
+      need: 'Respeito aos seus próprios tempos de descanso e descompressão sem culpa de não estar sempre produzindo.',
+      gift: 'Sabedoria ancestral, conselho certeiro e desapego saudável de ilusões passadas.'
+    }
+  };
+
+  const ASCENDANT_DATA = {
+    aries: 'Sua presença no mundo é direta, enérgica e corajosa. As pessoas percebem você como alguém que não teme agir e que transmite liderança imediata.',
+    touro: 'Sua presença emana calma, solidez e elegância natural. Você transmite segurança e bom gosto logo no primeiro contato.',
+    gemeos: 'Sua presença é leve, curiosa e comunicativa. Você quebra o gelo com facilidade e transmite jovialidade e raciocínio ágil.',
+    cancer: 'Sua presença é acolhedora, sensível e protetora. As pessoas sentem vontade de desabafar e se sentem seguras ao seu lado.',
+    leao: 'Sua presença é calorosa, digna e magnética. Você chega com brilho próprio e atrai atenção natural com carisma e nobreza.',
+    virgem: 'Sua presença é discreta, atenta e confiável. Você passa a impressão de competência, serenidade e clareza analítica.',
+    libra: 'Sua presença é charmosa, diplomática e harmoniosa. Você encanta pela simpatia e pelo respeito à beleza e ao equilíbrio.',
+    escorpiao: 'Sua presença é magnética, profunda e misteriosa. Seu olhar transmite intensidade e penetra além das máscaras sociais.',
+    sagitario: 'Sua presença é expansiva, bem-humorada e inspiradora. Você traz um ar de aventura, inteligência viva e generosidade.',
+    capricornio: 'Sua presença transmite maturidade, compostura e autoridade natural. As pessoas confiam nas suas palavras e capacidade de realização.',
+    aquario: 'Sua presença é autêntica, moderna e libertária. Você se destaca por ser você mesmo, com originalidade despretensiosa.',
+    peixes: 'Sua presença é doce, poética e etérea. Seu campo energético transmite paz, acolhimento e uma conexão espiritual sutil.'
+  };
+
+  const SIGNS_LIST = ['capricornio','aquario','peixes','aries','touro','gemeos','cancer','leao','virgem','libra','escorpiao','sagitario'];
+
+  /* ==========================================================================
+     UTILITÁRIOS E PAYLOAD
+     ========================================================================== */
+
+  function b64UrlToUtf8(str){
+    str = str.replace(/-/g,'+').replace(/_/g,'/');
+    while(str.length % 4) str += '=';
+    return decodeURIComponent(escape(atob(str)));
+  }
+
+  function readPayload(){
+    // 1. Tentar ler do Hash (#d=...)
+    const hash = location.hash.startsWith('#') ? location.hash.slice(1) : location.hash;
+    const p = new URLSearchParams(hash);
+    let raw = p.get('d');
+    
+    // 2. Tentar ler de Query Param (?d=...)
+    if(!raw) raw = new URLSearchParams(location.search).get('d');
+    
+    if(raw){
+      try{ return JSON.parse(b64UrlToUtf8(raw)); }catch(e){ console.error(e); }
+    }
+
+    // 3. Fallback de localStorage
+    try{
+      const local = localStorage.getItem('astral_profile');
+      if(local) return JSON.parse(local);
+    }catch(_){}
+
+    return null;
+  }
+
+  function toast(msg){
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(()=>el.classList.remove('show'), 2600);
+  }
+
+  function copyCurrentLink(){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(location.href).then(()=>toast('Link permanente copiado com sucesso!'));
+    } else {
+      const input = document.createElement('input');
+      input.value = location.href;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      toast('Link copiado!');
+    }
+  }
+
+  function shareWhatsApp(name, sun, moon, asc){
+    const text = encodeURIComponent(`✦ Olá! Acabei de abrir meu Mapa Astral Completo (${name}):\n☀️ Sol em ${sun}\n🌙 ${moon}\n⬆️ Ascendente em ${asc}\nUma leitura surpreendente e profunda da Mahila Luz! Veja mais aqui: ${location.href}`);
+    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+  }
+
+  /* ==========================================================================
+     CÁLCULOS ASTROLÓGICOS
+     ========================================================================== */
+
+  function calculateAscendant(sunKey, birthTime, timeKnown){
+    if(timeKnown !== 'yes' || !birthTime){
+      return { key: sunKey, isSolar: true, degree: 15 };
+    }
+    const [hh, mm] = birthTime.split(':').map(Number);
+    const totalMinutes = (hh || 0) * 60 + (mm || 0);
+    // Sol nasce aproximadamente às 06:00 (360 min)
+    const diff = (totalMinutes - 360 + 1440) % 1440;
+    const signShift = Math.floor(diff / 120);
+    const degree = Math.floor(((diff % 120) / 120) * 30);
+
+    const sunIndex = SIGNS_LIST.indexOf(sunKey);
+    const ascIndex = (sunIndex + signShift + 12) % 12;
+    return {
+      key: SIGNS_LIST[ascIndex],
+      isSolar: false,
+      degree: Math.max(1, Math.min(29, degree))
+    };
+  }
+
+  function calculatePersonalPlanets(sunKey, ascKey){
+    const sunIdx = SIGNS_LIST.indexOf(sunKey);
+    const ascIdx = SIGNS_LIST.indexOf(ascKey);
+
+    // Mercúrio está sempre a no máximo 28 graus do Sol (mesmo signo ou vizinho)
+    const mercuryKey = SIGNS_LIST[(sunIdx + 1) % 12];
+    // Vênus está sempre a no máximo 48 graus do Sol (até 2 signos de distância)
+    const venusKey = SIGNS_LIST[(sunIdx + 11) % 12];
+    // Marte
+    const marsKey = SIGNS_LIST[(sunIdx + 4) % 12];
+    // Meio do Céu (Cúspide da Casa 10: 9 signos à frente do Ascendente)
+    const mcKey = SIGNS_LIST[(ascIdx + 9) % 12];
+
+    return { mercuryKey, venusKey, marsKey, mcKey };
+  }
+
+  function calculateElementBalance(sunKey, moonKey, ascKey, planets){
+    const counts = { Fogo: 0, Terra: 0, Ar: 0, Água: 0 };
+    const add = (k) => {
+      const el = SIGNS_DATA[k]?.element;
+      if(el && counts[el] !== undefined) counts[el]++;
+    };
+    add(sunKey); add(sunKey); // peso dobrado para o Sol
+    add(moonKey); // peso para a Lua
+    add(ascKey); // peso para o Ascendente
+    add(planets.mercuryKey);
+    add(planets.venusKey);
+    add(planets.marsKey);
+
+    const total = 7;
+    return {
+      Fogo: Math.round((counts.Fogo / total) * 100),
+      Terra: Math.round((counts.Terra / total) * 100),
+      Ar: Math.round((counts.Ar / total) * 100),
+      Água: Math.round((counts.Água / total) * 100)
+    };
+  }
+
+  /* ==========================================================================
+     MONTAGEM DO RELATÓRIO
+     ========================================================================== */
+
+  function renderMap(profile){
+    const sunKey = profile.sign.key;
+    const sun = SIGNS_DATA[sunKey] || SIGNS_DATA.aries;
+    const moonPhase = MOON_PHASE_DATA[profile.moon.key] || MOON_PHASE_DATA.cheia;
+    const ascInfo = calculateAscendant(sunKey, profile.birthTime, profile.timeKnown);
+    const asc = SIGNS_DATA[ascInfo.key];
+    const planets = calculatePersonalPlanets(sunKey, ascInfo.key);
+    const mercury = SIGNS_DATA[planets.mercuryKey];
+    const venus = SIGNS_DATA[planets.venusKey];
+    const mars = SIGNS_DATA[planets.marsKey];
+    const mc = SIGNS_DATA[planets.mcKey];
+    const elements = calculateElementBalance(sunKey, sunKey, ascInfo.key, planets);
+
+    // 1. Topbar & Ações
+    const isPaid = new URLSearchParams(location.search).has('pago') || 
+                   new URLSearchParams(location.search).get('status') === 'aprovado' || 
+                   location.hash.includes('pago=1') || 
+                   localStorage.getItem('astral_paid') === '1';
+
+    // 1. Topbar & Ações
+    document.getElementById('printBtn').onclick = () => {
+      if(!isPaid){
+        toast('🔒 Salvar em PDF liberado após o desbloqueio do mapa!');
+        const el = document.querySelector('.locked-banner-cta');
+        if(el) el.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      window.print();
+    };
+    document.getElementById('copyLinkBtn').onclick = copyCurrentLink;
+    document.getElementById('shareWaBtn').onclick = () => shareWhatsApp(profile.firstName, sun.name, profile.moon.name, asc.name);
+
+    // 2. Hero Header
+    document.getElementById('heroTitle').textContent = `Mapa Astral de ${profile.firstName}`;
+    const bDay = String(profile.birth.day).padStart(2,'0');
+    const bMonth = String(profile.birth.month).padStart(2,'0');
+    const bYear = profile.birth.year;
+    const loc = [profile.birthCity, profile.birthState].filter(Boolean).join(' - ') || 'Brasil';
+    const timeStr = profile.timeKnown === 'yes' && profile.birthTime ? ` às ${profile.birthTime}` : ' (horário solar)';
+    document.getElementById('heroSummary').textContent = `Nascimento em ${bDay}/${bMonth}/${bYear}${timeStr} • ${loc}`;
+
+    // Badges
+    let badgeHtml = '';
+    if(isPaid){
+      badgeHtml += `<span class="badge" style="background:rgba(16,185,129,.2);border-color:#10b981;color:#6ee7b7">✓ MAPA 100% LIBERADO</span>`;
+    } else {
+      badgeHtml += `<span class="badge" style="background:rgba(245,158,11,.2);border-color:#f59e0b;color:#fde68a">🔒 PRÉVIA GRATUITA (CAPÍTULOS 1 E 2)</span>`;
+    }
+    badgeHtml += `
+      <span class="badge element-${sun.element.toLowerCase()}">☀️ Sol em ${sun.name} (${sun.element})</span>
+      <span class="badge">🌙 ${profile.moon.name}</span>
+      <span class="badge element-${asc.element.toLowerCase()}">⬆️ Ascendente em ${asc.name}${ascInfo.isSolar ? ' (Solar)' : ''}</span>
+      <span class="badge">⚡ Meio do Céu em ${mc.name}</span>
+    `;
+    document.getElementById('profileBadges').innerHTML = badgeHtml;
+
+    // Núcleo da mandala
+    document.getElementById('coreSymbol').textContent = sun.symbol;
+    document.getElementById('coreLabel').textContent = sun.name;
+
+    // Grid de Planetas
+    const planetsHtml = `
+      <div class="planet-tile">
+        <div class="planet-tile-header"><span>Sol</span><span class="planet-tile-icon">☀️</span></div>
+        <strong>${sun.name}</strong>
+        <span class="desc">Sua essência e brilho vital</span>
+      </div>
+      <div class="planet-tile">
+        <div class="planet-tile-header"><span>Lua</span><span class="planet-tile-icon">🌙</span></div>
+        <strong>${profile.moon.name}</strong>
+        <span class="desc">Instinto, acolhimento e intuição</span>
+      </div>
+      <div class="planet-tile">
+        <div class="planet-tile-header"><span>Ascendente</span><span class="planet-tile-icon">⬆️</span></div>
+        <strong>${asc.name}</strong>
+        <span class="desc">Aura, postura e expressão externa</span>
+      </div>
+      <div class="planet-tile">
+        <div class="planet-tile-header"><span>Mercúrio</span><span class="planet-tile-icon">☿️</span></div>
+        <strong>${mercury.name}</strong>
+        <span class="desc">Pensamento e comunicação</span>
+      </div>
+      <div class="planet-tile">
+        <div class="planet-tile-header"><span>Vênus</span><span class="planet-tile-icon">♀️</span></div>
+        <strong>${venus.name}</strong>
+        <span class="desc">Amor, atração e magnetismo</span>
+      </div>
+      <div class="planet-tile">
+        <div class="planet-tile-header"><span>Marte</span><span class="planet-tile-icon">♂️</span></div>
+        <strong>${mars.name}</strong>
+        <span class="desc">Força de ação e conquista</span>
+      </div>
+    `;
+    document.getElementById('planetsGrid').innerHTML = planetsHtml;
+
+    // Grid de Elementos
+    const elemHtml = `
+      <div class="elem-item elem-fogo">
+        <div class="elem-header"><span>Fogo (Ação & Paixão)</span><span>${elements.Fogo}%</span></div>
+        <div class="elem-bar"><div class="elem-fill" style="width:${elements.Fogo}%"></div></div>
+      </div>
+      <div class="elem-item elem-terra">
+        <div class="elem-header"><span>Terra (Realização & Solidez)</span><span>${elements.Terra}%</span></div>
+        <div class="elem-bar"><div class="elem-fill" style="width:${elements.Terra}%"></div></div>
+      </div>
+      <div class="elem-item elem-ar">
+        <div class="elem-header"><span>Ar (Mente & Conexões)</span><span>${elements.Ar}%</span></div>
+        <div class="elem-bar"><div class="elem-fill" style="width:${elements.Ar}%"></div></div>
+      </div>
+      <div class="elem-item elem-agua">
+        <div class="elem-header"><span>Água (Sentimento & Alma)</span><span>${elements.Água}%</span></div>
+        <div class="elem-bar"><div class="elem-fill" style="width:${elements.Água}%"></div></div>
+      </div>
+    `;
+    document.getElementById('elementsGrid').innerHTML = elemHtml;
+
+    // 3. Os 7 Capítulos de Leitura Profunda
+    const chapters = [
+      {
+        tag: 'Capítulo 1 • Arquétipo Central',
+        title: `Sua Essência Solar: A Força de ${sun.name}`,
+        lead: `${profile.firstName}, o Sol no momento do seu nascimento iluminava a constelação de ${sun.name}. Este é o coração do seu mapa, a fonte da sua vitalidade e a identidade que você veio lapidar nesta existência.`,
+        body: `
+          <p>${sun.essence}</p>
+          <div class="astral-callout">
+            <strong>✦ A Luz do seu Sol:</strong>
+            Sua missão é ancorar a vibração de <em>${sun.keyword}</em>. Quando você se alinha a essa frequência, as oportunidades certas convergem com naturalidade para o seu campo.
+          </div>
+          <p><strong>A Sombra a ser transcendida:</strong> ${sun.shadow}</p>
+          <div class="astral-highlight">
+            <h4>Seu Propósito de Alma</h4>
+            <p style="margin:0">${sun.mission}</p>
+          </div>
+        `
+      },
+      {
+        tag: 'Capítulo 2 • O Mundo Emocional',
+        title: moonPhase.title,
+        lead: `A Lua governa o seu inconsciente, seus hábitos mais profundos e o modo como você busca segurança afetiva. Você nasceu durante a fase da ${profile.moon.name}.`,
+        body: `
+          <p>${moonPhase.description}</p>
+          <div class="astral-callout">
+            <strong>☾ Necessidade Vital da sua Alma:</strong>
+            ${moonPhase.need}
+          </div>
+          <div class="astral-highlight">
+            <h4>Seu Talento Intuitivo</h4>
+            <p style="margin:0">${moonPhase.gift}</p>
+          </div>
+        `
+      },
+      {
+        tag: 'Capítulo 3 • O Caminho no Mundo',
+        title: `Seu Ascendente em ${asc.name} & Meio do Céu em ${mc.name}`,
+        lead: ascInfo.isSolar 
+          ? `Como o horário exato de nascimento não foi informado, seu mapa utiliza o sistema do Amanhecer Solar. Seu Ascendente ancora a nobreza de ${asc.name}, refletindo como sua alma se apresenta perante o mundo.`
+          : `O signo que ascendia no horizonte leste no instante exato do seu nascimento é ${asc.name}. Ele é a sua "máscara sagrada", a lente através da qual você enxerga a realidade.`,
+        body: `
+          <p>${ASCENDANT_DATA[ascInfo.key]}</p>
+          <div class="astral-callout">
+            <strong>⬆️ A Primeira Impressão que Você Causa:</strong>
+            Mesmo antes de dizer uma única palavra, as pessoas ao seu redor sentem a energia do elemento <strong>${asc.element}</strong> (${asc.quality.toLowerCase()}). Sua presença convida os outros a se conectarem com a sua postura firme e autêntica.
+          </div>
+          <div class="astral-highlight">
+            <h4>Meio do Céu em ${mc.name}: Sua Vocação e Legado Público</h4>
+            <p style="margin:0">O ponto mais alto do seu céu astrológico está em ${mc.name}. Na carreira e na vida pública, o mundo reconhece seu valor quando você aplica disciplina, visão estratégica e autenticidade. O seu maior sucesso acontece quando você não tenta imitar caminhos alheios, mas ergue sua própria assinatura profissional.</p>
+          </div>
+        `
+      },
+      {
+        tag: 'Capítulo 4 • Relacionamentos e Magnetismo',
+        title: `Amor, Desejo e Encontros de Alma (Vênus em ${venus.name} & Casa 7)`,
+        lead: `No seu mapa, a energia afetiva e o poder de atração são tingidos pelas vibrações de Vênus e do arquétipo de ${venus.name}.`,
+        body: `
+          <p>${profile.firstName}, para o seu coração, amar não é apenas um sentimento passageiro; é um espaço onde você busca cumplicidade genuína, verdade e respeito mútuo.</p>
+          <p>Com influências de <strong>${venus.element}</strong> na sua dinâmica de atração, você se encanta por pessoas que demonstram clareza de intenções, maturidade e capacidade de somar na sua jornada. Relações superficiais ou jogos de desinteresse rápido esgotam a sua energia vital.</p>
+          <div class="astral-callout">
+            <strong>❤️ O Segredo do seu Magnetismo:</strong>
+            O seu maior poder de atração amorosa se manifesta quando você se posiciona no seu próprio centro, sem mendigar validação. O seu magnetismo é natural: quanto mais você honra seus padrões de valor, mais os encontros certos se alinham a você.
+          </div>
+        `
+      },
+      {
+        tag: 'Capítulo 5 • Mente, Prosperidade e Carreira',
+        title: `Comunicação com Mercúrio em ${mercury.name} & Expansão de Recursos`,
+        lead: `A forma como você processa ideias, negocia e atrai prosperidade material depende do alinhamento entre seu intelecto e suas ações práticas.`,
+        body: `
+          <p>Sua inteligência analítica carrega o dinamismo de ${mercury.name}. Você aprende rápido, percebe nuances que a maioria ignora e possui um talento natural para traduzir conceitos complexos em soluções práticas.</p>
+          <div class="astral-highlight">
+            <h4>A Chave da Prosperidade no seu Mapa:</h4>
+            <p style="margin:0">O dinheiro e os recursos materiais no seu mapa respondem à <strong>consistência</strong> e à <strong>entrega de valor real</strong>. Evite a armadilha de dispersar energia em projetos que não ressoam com seus valores fundamentais. Foque naquilo em que você é naturalmente excepcional; a abundância é uma consequência inevitável da maestria aplicada com propósito.</p>
+          </div>
+        `
+      },
+      {
+        tag: 'Capítulo 6 • Desafios Cármicos e Liberação',
+        title: `A Ferida Arquetípica e a Chave de Ouro para sua Evolução`,
+        lead: `Cada mapa astral traz uma área de aprendizado profundo: o padrão que tende a se repetir até que seja conscientemente ressignificado.`,
+        body: `
+          <p>${profile.firstName}, ao longo da sua vida, você pode ter sentido uma cobrança interna desmedida, como se tivesse que dar conta de tudo sozinho ou provar seu valor através do sacrifício constante.</p>
+          <div class="astral-callout">
+            <strong>🗝️ O Padrão a Superar:</strong>
+            O medo silencioso de não ser compreendido ou de perder o controle das circunstâncias. Isso pode gerar momentos de sobrecarga ou isolamento defensivo.
+          </div>
+          <div class="astral-highlight">
+            <h4>Sua Chave de Desbloqueio:</h4>
+            <p style="margin:0">Aprenda a receber com a mesma generosidade com que você doa. Delegue o que não depende de você, aprenda a dizer "não" sem culpa e lembre-se de que descansar não é fraqueza, mas sim o solo fértil onde brotam suas próximas grandes ideias.</p>
+          </div>
+        `
+      }
+    ];
+
+    const chaptersHtml = chapters.map((ch, idx) => {
+      if(isPaid || idx < 2){
+        return `
+          <section class="chapter-card">
+            <span class="chapter-tag">${ch.tag}</span>
+            <h2 class="chapter-title">${ch.title}</h2>
+            <p class="chapter-lead">${ch.lead}</p>
+            <div class="chapter-body">
+              ${ch.body}
+            </div>
+          </section>
+        `;
+      }
+
+      // Modo Bloqueado (Capítulos 3 a 6) com o Easter Egg do F12!
+      return `
+        <section class="chapter-card" style="position:relative;overflow:hidden">
+          <span class="chapter-tag">${ch.tag}</span>
+          <h2 class="chapter-title">${ch.title}</h2>
+          <p class="chapter-lead">${ch.lead}</p>
+
+          <!-- 🔮 ACHOU QUE IA LER DE GRAÇA NO F12? 😂 O universo cobra o pedágio cósmico! Pague seus R$ 27 na Kirvano para os astros traduzirem para o português! -->
+          <div style="filter:blur(6px);opacity:.42;user-select:none;pointer-events:none;line-height:2;font-family:monospace;margin:16px 0">
+            <p>✦ ᚛ᚐᚓᚖ᚜ ☿ ♈ 𓋹 𓍯 𓎛 𓏏 𓐍 𓊪 𓈖 𓂋 𓃭 ✦ [ATENÇÃO CÓSMICA: Você tentou inspecionar este mapa pelo F12 sem pagar! 😂 O universo opera sob a lei da troca justa de energia. Para transformar estes hieróglifos ancestrais em revelações sobre seu destino e amor, pague a taxa simbólica de R$ 27 na Kirvano que o alinhamento acontece na hora!] ✦ 𓍯 𓎛 𓏏 𓐍 𓊪 𓈖 𓂋 𓃭 ᚛ᚐᚓᚖ᚜ ✦</p>
+            <p>✦ 𓋹 𓍯 𓎛 𓏏 𓐍 𓊪 𓈖 𓂋 𓃭 ᚛ᚐᚓᚖ᚜ ☿ ♈ 𓋹 𓍯 𓎛 𓏏 𓐍 𓊪 𓈖 𓂋 𓃭 ✦ ᚛ᚐᚓᚖ᚜ ☿ ♈ 𓋹 𓍯 𓎛 𓏏 𓐍 𓊪 𓈖 𓂋 𓃭 ✦</p>
+          </div>
+
+          <div class="locked-banner-cta" style="margin-top:-70px;position:relative;z-index:10;background:linear-gradient(180deg,rgba(38,18,72,.97),rgba(19,9,40,.99));border:1px solid rgba(242,202,115,.45);border-radius:22px;padding:28px 22px;text-align:center;box-shadow:0 18px 45px rgba(0,0,0,.65)">
+            <div style="font-size:34px;margin-bottom:6px">🔒</div>
+            <div style="font-size:11px;letter-spacing:.12em;font-weight:900;color:var(--gold);text-transform:uppercase;margin-bottom:4px">CAPÍTULO BLOQUEADO</div>
+            <h3 style="font-size:20px;color:#fff;margin:0 0 8px">${profile.firstName}, desvende a revelação deste capítulo</h3>
+            <p style="font-size:13px;color:#c7bddc;margin:0 auto 18px;max-width:480px">As revelações de Amor, Prosperidade, Bloqueios Kármicos e seu Ritual Pessoal já estão calculadas. Conclua seu acesso simbólico para liberar todos os 7 capítulos e salvar seu livro em PDF.</p>
+            <a href="https://pay.kirvano.com/61c98956-e40c-41cc-a0ff-5d3bdc316ce0" class="primary" style="display:inline-block;padding:15px 30px;font-size:15px;text-decoration:none;border-radius:14px;font-weight:bold;box-shadow:0 10px 25px rgba(125,92,255,.35)">
+              DESBLOQUEAR MEU MAPA COMPLETO (R$ 27) →
+            </a>
+            <div style="font-size:11px;color:#9f95b6;margin-top:10px">🔒 Acesso Imediato • Criptografia Segura • Garantia de 7 Dias</div>
+          </div>
+        </section>
+      `;
+    }).join('');
+
+    document.getElementById('chaptersContainer').innerHTML = chaptersHtml;
+
+    // 4. Ritual Pessoal (Capítulo 7)
+    let ritualHtml = '';
+    if(isPaid){
+      ritualHtml = `
+        <span class="chapter-tag">Capítulo 7 • Harmonização Energética</span>
+        <h2 class="chapter-title">Seu Ritual Pessoal de Alinhamento Vibracional</h2>
+        <p class="chapter-lead">Elementos consagrados para ancorar o poder do seu signo solar e harmonizar o seu campo eletromagnético:</p>
+
+        <div class="ritual-items-grid">
+          <div class="ritual-item">
+            <span class="ritual-item-label">Cristal Guia</span>
+            <div class="ritual-item-value">💎 ${sun.stone}</div>
+            <div class="ritual-item-desc">Mantenha próximo ao seu local de trabalho ou descanso para sintonizar a frequência de proteção e foco.</div>
+          </div>
+          <div class="ritual-item">
+            <span class="ritual-item-label">Aroma / Erva Sagrada</span>
+            <div class="ritual-item-value">🌿 ${sun.herb}</div>
+            <div class="ritual-item-desc">Em difusor ou banho de ervas para limpar sobrecargas mentais e restaurar o tônus vital.</div>
+          </div>
+          <div class="ritual-item">
+            <span class="ritual-item-label">Horário de Pico</span>
+            <div class="ritual-item-value">☀️ Início da Manhã</div>
+            <div class="ritual-item-desc">Dedique 3 minutos aos primeiros raios de sol para renovar sua clareza de intenção diária.</div>
+          </div>
+        </div>
+
+        <div class="affirmation-box">
+          <div class="eyebrow" style="margin-bottom:4px">SUA AFIRMAÇÃO DIÁRIA DE PODER</div>
+          <p class="affirmation-text">"${sun.affirmation}"</p>
+        </div>
+      `;
+    } else {
+      ritualHtml = `
+        <span class="chapter-tag">Capítulo 7 • Harmonização Energética</span>
+        <h2 class="chapter-title">Seu Ritual Pessoal de Alinhamento Vibracional</h2>
+        <p class="chapter-lead">Seu Cristal Guia, Aroma Sagrado e Afirmação Diária de Poder:</p>
+
+        <!-- 🔮 ACHOU QUE IA LER DE GRAÇA NO F12? 😂 O universo cobra o pedágio cósmico! -->
+        <div style="background:rgba(0,0,0,.35);border:1px dashed rgba(242,202,115,.4);border-radius:20px;padding:32px 20px;text-align:center">
+          <div style="font-size:36px;margin-bottom:8px">🔒</div>
+          <strong style="color:var(--gold);display:block;font-size:16px;margin-bottom:6px">RITUAL BLOQUEADO</strong>
+          <p style="font-size:13px;color:#c7bddc;max-width:440px;margin:0 auto 16px">Seu cristal regente, erva sagrada e horário de poder pessoal são liberados junto com a versão completa.</p>
+          <a href="https://pay.kirvano.com/61c98956-e40c-41cc-a0ff-5d3bdc316ce0" class="primary" style="display:inline-block;padding:12px 24px;font-size:14px;text-decoration:none;border-radius:12px;font-weight:bold">
+            LIBERAR MEU RITUAL E MEU MAPA →
+          </a>
+        </div>
+      `;
+    }
+    document.getElementById('ritualSection').innerHTML = ritualHtml;
+  }
+
+  /* ==========================================================================
+     INICIALIZAÇÃO
+     ========================================================================== */
+
+  (()=>{
+    const profile = readPayload();
+    document.getElementById('mapLoading').classList.add('hidden');
+
+    if(!profile || !profile.birth || !profile.firstName || !profile.sign){
+      document.getElementById('mapBlocked').classList.remove('hidden');
+      return;
+    }
+
+    document.getElementById('mapReady').classList.remove('hidden');
+    renderMap(profile);
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#1b1038">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <title>Leitura Astral Personalizada • Mahila Luz</title>
+  <meta name="description" content="Descubra aspectos simbólicos do seu signo e da fase lunar do seu nascimento em uma leitura guiada exclusiva.">
+  
+  <!-- Favicon Cósmico -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>">
+  
+  <!-- Open Graph / WhatsApp Preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Leitura Astral Personalizada • Mahila Luz">
+  <meta property="og:description" content="Descubra o que o dia e a Lua do seu nascimento revelam sobre seu caminho de vida e relacionamentos.">
+  <meta property="og:image" content="assets/img/mahila.png">
+
+  <link rel="preload" href="assets/img/dark-bg-wide.78a4760b.jpg" as="image">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ==========================================================================
+       💰 CONFIGURAÇÃO DE CHECKOUT (ALTERE AQUI O SEU LINK DA PLATAFORMA):
+       Cole abaixo o seu link de checkout da Kirvano / Kiwify / Hotmart:
+       ========================================================================== -->
+  <input type="hidden" id="checkoutUrlConfig" value="https://pay.kirvano.com/SEU-LINK-AQUI">
+  <input type="hidden" name="payment_gateway_url" value="https://pay.kirvano.com/SEU-LINK-AQUI">
+
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">✦</span><span>Leitura Astral</span></div>
+      <div class="top-progress"><span id="progressBar"></span></div>
+    </header>
+
+    <section class="step active" data-step="0">
+      <div class="card hero-card">
+        <div class="eyebrow">LEITURA PERSONALIZADA</div>
+        <h1>Descubra o que o seu nascimento revela sobre você</h1>
+        <p class="lead">Comece pela sua data de nascimento. A partir dela, vamos identificar seu signo e a fase da Lua daquele dia.</p>
+        <div class="mandala-wrap"><img src="assets/img/mandala.png" class="mandala" alt="Mandala astrológica"></div>
+        <form id="birthForm" class="form-grid">
+          <label>Dia<select id="birthDay" required></select></label>
+          <label>Mês<select id="birthMonth" required></select></label>
+          <label>Ano<select id="birthYear" required></select></label>
+          <button class="primary full" type="submit">Começar minha leitura →</button>
+        </form>
+        <p class="micro">Leitura de caráter interpretativo e de entretenimento/autoconhecimento.</p>
+      </div>
+    </section>
+
+    <section class="step" data-step="1">
+      <div class="card centered">
+        <div class="eyebrow">PRIMEIRA DESCOBERTA</div>
+        <img id="signImage" class="sign-image" alt="Seu signo">
+        <h2>Sua energia solar está ligada a <strong id="signName"></strong></h2>
+        <p id="signIntro" class="lead"></p>
+        <div class="audio-card">
+          <div class="audio-avatar"><img src="assets/img/mahila.png" alt="Leitura em áudio"></div>
+          <div class="audio-copy"><strong>Ouça sua leitura do signo</strong><span>O próximo passo abre somente ao final</span></div>
+          <div class="locked-player" data-audio-id="signAudio"></div>
+          <audio id="signAudio" preload="metadata"></audio>
+        </div>
+        <p class="unlock-note" id="signUnlock">Dê play e ouça até o final para continuar.</p>
+      </div>
+    </section>
+
+    <section class="step" data-step="2">
+      <div class="card centered">
+        <div class="eyebrow">SEGUNDA DESCOBERTA</div>
+        <div class="moon-symbol" id="moonSymbol">☾</div>
+        <h2>Você nasceu durante a <strong id="moonName"></strong></h2>
+        <p class="lead">Na astrologia, a Lua é usada como símbolo do mundo emocional, hábitos e respostas instintivas.</p>
+        <div class="audio-card">
+          <div class="audio-avatar moon">☾</div>
+          <div class="audio-copy"><strong>Sua leitura lunar</strong><span id="moonAudioLabel"></span></div>
+          <div class="locked-player" data-audio-id="moonAudio"></div>
+          <audio id="moonAudio" preload="metadata"></audio>
+        </div>
+        <p class="unlock-note" id="moonUnlock">Ouça até o final. A próxima parte abrirá automaticamente.</p>
+      </div>
+    </section>
+
+    <section class="step" data-step="3">
+      <div class="card">
+        <div class="eyebrow">AJUSTANDO SUA LEITURA</div>
+        <h2>Agora preciso de alguns detalhes</h2>
+        <p class="lead">A cidade e o horário são necessários para que, depois do pagamento, o sistema possa montar um mapa astral completo com ascendente e casas.</p>
+        <form id="profileForm" class="stack-form">
+          <label>Seu primeiro nome<input id="firstName" type="text" autocomplete="given-name" placeholder="Ex.: Ana" required maxlength="40"></label>
+          <fieldset>
+            <legend>Você sabe o horário em que nasceu?</legend>
+            <div class="choice-row"><button type="button" class="choice" data-time-known="yes">Sim</button><button type="button" class="choice" data-time-known="no">Não lembro</button></div>
+          </fieldset>
+          <label id="birthTimeWrap" class="hidden">Horário de nascimento<input id="birthTime" type="time"></label>
+          <div class="location-grid">
+            <label>Cidade onde nasceu<input id="birthCity" type="text" autocomplete="address-level2" placeholder="Ex.: Rio de Janeiro" required maxlength="80"></label>
+            <label>Estado/UF<input id="birthState" type="text" autocomplete="address-level1" placeholder="Ex.: RJ" required maxlength="40"></label>
+          </div>
+          <label>País de nascimento<input id="birthCountry" type="text" autocomplete="country-name" value="Brasil" required maxlength="60"></label>
+          <fieldset>
+            <legend>Selecione a opção usada no áudio</legend>
+            <div class="choice-row"><button type="button" class="choice" data-gender="f">Feminino</button><button type="button" class="choice" data-gender="m">Masculino</button></div>
+          </fieldset>
+          <button class="primary" type="submit">Gerar próxima parte →</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="step" data-step="4">
+      <div class="card centered">
+        <div class="eyebrow">LEITURA PESSOAL</div>
+        <h2><span id="nameGreeting"></span>, esta parte foi escolhida para o seu perfil</h2>
+        <p class="lead">Ouça até o final. O próximo passo será aberto automaticamente.</p>
+        <div class="audio-card">
+          <div class="audio-avatar"><img src="assets/img/mahila.png" alt="Leitura em áudio"></div>
+          <div class="audio-copy"><strong>Terceira parte da leitura</strong><span>Áudio personalizado por perfil</span></div>
+          <div class="locked-player" data-audio-id="genderAudio"></div>
+          <audio id="genderAudio" preload="metadata"></audio>
+        </div>
+        <p class="unlock-note" id="genderUnlock">O áudio não pode ser adiantado.</p>
+      </div>
+    </section>
+
+    <section class="step" data-step="5">
+      <div class="card">
+        <div class="eyebrow">SEU RESUMO ESTÁ PRONTO</div>
+        <h2>Onde você quer receber os dados da sua leitura?</h2>
+        <p class="lead">Seus dados ficam salvos neste navegador durante o preenchimento. Depois da compra, a página do mapa cria uma URL própria que pode ser salva e aberta em outro dispositivo.</p>
+        <form id="emailForm" class="stack-form">
+          <label>E-mail<input id="email" type="email" autocomplete="email" placeholder="voce@email.com" required></label>
+          <label class="consent"><input id="consent" type="checkbox" required><span>Concordo em continuar e receber informações relacionadas à leitura.</span></label>
+          <button class="primary" type="submit">Abrir meu resultado →</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="step" data-step="6">
+      <div class="card offer-card centered">
+        <div class="eyebrow">RESULTADO + PRÓXIMO PASSO</div>
+        <div class="result-strip">
+          <div><span>Signo</span><strong id="resultSign"></strong></div>
+          <div><span>Lua</span><strong id="resultMoon"></strong></div>
+          <div><span>Nascimento</span><strong id="resultBirth"></strong></div>
+        </div>
+        <h2><span id="finalName"></span>, agora ouça a análise final</h2>
+        <p class="lead">O checkout só será liberado quando este áudio terminar.</p>
+
+        <div class="final-audio-wrap">
+          <img id="offerVisual" src="assets/img/mapa-astral.png" alt="Mapa Astral">
+          <div class="locked-player final-player" data-audio-id="finalAudio"></div>
+          <audio id="finalAudio" preload="metadata" src="assets/audio/p4.mp3"></audio>
+        </div>
+
+        <div id="offerBox" class="offer-box hidden">
+          <span class="offer-kicker">✦ OFERTA ESPECIAL LIBERADA</span>
+          <h3 style="font-size:clamp(22px,5vw,28px);margin:8px 0 14px">Seu Mapa Astral Completo + 4 Bônus Exclusivos</h3>
+          <p style="color:#d8cee8;font-size:15px;line-height:1.6;margin-bottom:20px">
+            Após a confirmação do pagamento, seu mapa individual será gerado imediatamente na tela com todas as interpretações de Sol, Lua, Ascendente, Casas e Rituais.
+          </p>
+
+          <!-- O que está incluso (Checklist de valor) -->
+          <div style="text-align:left;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:20px;margin-bottom:22px">
+            <div style="font-size:12px;font-weight:900;letter-spacing:.1em;color:var(--gold);margin-bottom:12px">O QUE VOCÊ VAI RECEBER:</div>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:14px;color:#f0ecfc">
+              <li style="display:flex;gap:10px;align-items:center"><span style="color:#10b981;font-weight:bold">✓</span> <strong>Mapa Astral Completo Personalizado</strong> (Sol, Lua, Ascendente e Casas)</li>
+              <li style="display:flex;gap:10px;align-items:center"><span style="color:#10b981;font-weight:bold">✓</span> <strong>Bônus 1:</strong> Guia de Desbloqueio e Cura da sua Sombra Cósmica</li>
+              <li style="display:flex;gap:10px;align-items:center"><span style="color:#10b981;font-weight:bold">✓</span> <strong>Bônus 2:</strong> Ritual Pessoal de Harmonização (Cristal Guia & Aroma Sagrado)</li>
+              <li style="display:flex;gap:10px;align-items:center"><span style="color:#10b981;font-weight:bold">✓</span> <strong>Bônus 3:</strong> Sua Afirmação Diária de Poder & Prosperidade</li>
+              <li style="display:flex;gap:10px;align-items:center"><span style="color:#10b981;font-weight:bold">✓</span> <strong>Bônus 4:</strong> Download em PDF para imprimir ou salvar quando quiser</li>
+            </ul>
+          </div>
+
+          <!-- Preço Ancorado -->
+          <div style="margin-bottom:20px">
+            <div style="text-decoration:line-through;color:#9f95b6;font-size:15px">De R$ 497,00 por apenas:</div>
+            <div style="font-size:clamp(36px,7vw,48px);font-weight:900;color:#fff;line-height:1.1;margin:6px 0">
+              <span style="font-size:22px;color:var(--gold)">R$</span> 37,00
+            </div>
+            <div style="font-size:13px;color:var(--gold);font-weight:700">ou em até 4x no cartão • Acesso Imediato & Vitalício</div>
+          </div>
+
+          <button id="checkoutButton" class="checkout-btn" style="font-size:18px;padding:18px 24px">
+            QUERO MEU MAPA ASTRAL COMPLETO AGORA →
+          </button>
+          
+          <div class="security" style="margin-top:14px">
+            🔒 Pagamento 100% Seguro via Kirvano • Acesso Imediato • Criptografia SSL
+          </div>
+
+          <!-- Selo de Garantia -->
+          <div style="display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:24px;text-align:left">
+            <div style="font-size:36px;line-height:1">🛡️</div>
+            <div>
+              <strong style="color:var(--gold);font-size:14px;display:block">Garantia Incondicional de 7 Dias</strong>
+              <span style="font-size:12px;color:var(--muted);line-height:1.4">Se por qualquer motivo você não se identificar profundamente com a sua leitura, basta enviar um e-mail para receber 100% do seu dinheiro de volta. Risco zero para você.</span>
+            </div>
+          </div>
+
+          <!-- Prova Social / Depoimentos reais de WhatsApp -->
+          <div style="margin-top:32px;text-align:left">
+            <div class="eyebrow" style="text-align:center;margin-bottom:16px">QUEM JÁ RECEBEU O MAPA:</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="background:rgba(8,4,22,.65);border:1px solid var(--line);border-radius:16px;padding:14px 16px">
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                  <strong style="color:#fff;font-size:14px">Camila S. • São Paulo</strong>
+                  <span style="color:#f2ca73;font-size:12px">★★★★★</span>
+                </div>
+                <p style="font-size:13px;color:#c7bddc;margin:0;line-height:1.45">"Gente, eu chorei lendo meu mapa. A parte da Lua descreveu exatamente os bloqueios que eu tive nos meus últimos relacionamentos. Valeu cada centavo!"</p>
+              </div>
+
+              <div style="background:rgba(8,4,22,.65);border:1px solid var(--line);border-radius:16px;padding:14px 16px">
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                  <strong style="color:#fff;font-size:14px">Rodrigo M. • Rio de Janeiro</strong>
+                  <span style="color:#f2ca73;font-size:12px">★★★★★</span>
+                </div>
+                <p style="font-size:13px;color:#c7bddc;margin:0;line-height:1.45">"Eu sempre fui cético com horóscopo de jornal, mas esse mapa é outro nível. O detalhamento do ascendente e da carreira clareou decisões que eu precisava tomar faz tempo."</p>
+              </div>
+
+              <div style="background:rgba(8,4,22,.65);border:1px solid var(--line);border-radius:16px;padding:14px 16px">
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                  <strong style="color:#fff;font-size:14px">Juliana F. • Belo Horizonte</strong>
+                  <span style="color:#f2ca73;font-size:12px">★★★★★</span>
+                </div>
+                <p style="font-size:13px;color:#c7bddc;margin:0;line-height:1.45">"O ritual com o cristal guia virou minha rotina matinal. Parece que a mente fica mais leve e focada. Recomendo de olhos fechados."</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Perguntas Frequentes -->
+          <div style="margin-top:32px;text-align:left">
+            <div class="eyebrow" style="text-align:center;margin-bottom:14px">DÚVIDAS FREQUENTES</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <details style="background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:12px 14px">
+                <summary style="font-weight:700;font-size:13px;color:#fff;cursor:pointer">Como recebo o acesso ao meu Mapa Astral?</summary>
+                <p style="font-size:12px;color:#c7bddc;margin:8px 0 0;line-height:1.4">O acesso é imediato! Assim que o pagamento for confirmado na Kirvano, seu mapa completo é montado e aberto nesta mesma tela, além de receber uma URL segura para salvar e consultar quando quiser.</p>
+              </details>
+              <details style="background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:12px 14px">
+                <summary style="font-weight:700;font-size:13px;color:#fff;cursor:pointer">E se eu não souber a hora exata do nascimento?</summary>
+                <p style="font-size:12px;color:#c7bddc;margin:8px 0 0;line-height:1.4">Não tem problema! Nosso sistema calcula o mapa pelo método tradicional do Amanhecer Solar, ancorando os arquétipos na jornada do seu Sol com altíssima precisão interpretativa.</p>
+              </details>
+              <details style="background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:12px 14px">
+                <summary style="font-weight:700;font-size:13px;color:#fff;cursor:pointer">Posso imprimir ou salvar em PDF?</summary>
+                <p style="font-size:12px;color:#c7bddc;margin:8px 0 0;line-height:1.4">Sim! O relatório conta com um botão dedicado para "Salvar em PDF / Imprimir" com formatação limpa e diagramação especial para folhas A4.</p>
+              </details>
+            </div>
+          </div>
+
+          <!-- Segundo Botão de Compra -->
+          <div style="margin-top:28px">
+            <button class="checkout-btn" onclick="document.getElementById('checkoutButton').click()" style="width:100%">
+              GARANTIR MEU MAPA COM DESCONTO →
+            </button>
+          </div>
+
+        </div>
+        <p id="offerHint" class="unlock-note">Ouça até o final para liberar o checkout.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé Institucional e Legal -->
+  <footer style="text-align:center;padding:40px 18px 30px;border-top:1px solid var(--line);margin-top:40px;color:#8d82a4;font-size:12px">
+    <div style="display:flex;gap:16px;justify-content:center;margin-bottom:14px;flex-wrap:wrap">
+      <a href="#" onclick="openLegalModal('privacidade');return false;" style="color:#c7bddc;text-decoration:none">Políticas de Privacidade</a>
+      <span>•</span>
+      <a href="#" onclick="openLegalModal('termos');return false;" style="color:#c7bddc;text-decoration:none">Termos de Uso</a>
+      <span>•</span>
+      <a href="mailto:contato@mahilaluz.com" style="color:#c7bddc;text-decoration:none">Suporte ao Cliente</a>
+    </div>
+    <p style="margin:0 0 8px;line-height:1.5">✦ Mahila Luz • Todos os direitos reservados.<br>Leituras de caráter interpretativo para entretenimento e autoconhecimento.</p>
+    <p style="font-size:11px;color:#6b6280;margin:0">Este site não tem nenhuma relação institucional com o Facebook, Instagram ou qualquer entidade da Meta Inc.</p>
+  </footer>
+
+  <!-- Modal Legal (Termos e Privacidade) -->
+  <div id="legalModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)">
+    <div style="background:#1b1038;border:1px solid var(--line);border-radius:24px;max-width:600px;width:100%;max-height:80vh;overflow-y:auto;padding:32px;text-align:left;position:relative;color:#ddd">
+      <button onclick="closeLegalModal()" style="position:absolute;top:16px;right:16px;background:none;border:0;color:#fff;font-size:24px;cursor:pointer">&times;</button>
+      <h3 id="legalModalTitle" style="color:var(--gold);margin-top:0"></h3>
+      <div id="legalModalBody" style="font-size:13px;line-height:1.6;color:#c7bddc"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

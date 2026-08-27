@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <title>Aviso Importante: O Mapa da sua Alma Gêmea • Mahila Luz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Alerta de Sucesso no Topo -->
+  <div class="upsell-alert-bar">
+    <span>✓</span>
+    <span>PAGAMENTO DO SEU MAPA ASTRAL CONFIRMADO! NÃO FECHE ESTA PÁGINA.</span>
+  </div>
+
+  <main class="upsell-shell">
+    <div class="upsell-card">
+      
+      <div class="upsell-badge">✦ REVELAÇÃO EXCLUSIVA DE VÊNUS • ETAPA FINAL</div>
+
+      <div class="timer-pill">
+        <span>Oferta disponível por apenas:</span>
+        <strong id="countdown">09:59</strong>
+      </div>
+
+      <h1 style="font-size:clamp(26px,5vw,38px);margin-bottom:12px">
+        <span id="userNameGreeting"></span>, seu mapa revelou um segredo sobre a sua vida amorosa…
+      </h1>
+      
+      <p class="lead" style="margin-bottom:24px">
+        Enquanto seu Mapa Astral completo está sendo processado, uma combinação rara entre o seu <strong>Sol</strong> e a sua <strong>Casa 7 (Casa do Amor)</strong> indicou que você está entrando em um portal de novos encontros.
+      </p>
+
+      <div class="upsell-features">
+        <div class="upsell-feature-item">
+          <div class="feature-icon">💫</div>
+          <div class="feature-text">
+            <strong>O Signo e Arquétipo da sua Alma Gêmea</strong>
+            <span>Descubra as características exatas, o elemento e o temperamento da pessoa magneticamente compatível com o seu destino.</span>
+          </div>
+        </div>
+
+        <div class="upsell-feature-item">
+          <div class="feature-icon">⏳</div>
+          <div class="feature-text">
+            <strong>Sua Linha do Tempo Cósmica no Amor</strong>
+            <span>Os meses mais propícios e as janelas de tempo em que as estrelas alinharão os caminhos de vocês.</span>
+          </div>
+        </div>
+
+        <div class="upsell-feature-item">
+          <div class="feature-icon">🗝️</div>
+          <div class="feature-text">
+            <strong>Quebra do Ciclo Repetitivo de Desilusões</strong>
+            <span>Entenda o motivo oculto pelo qual seus relacionamentos anteriores se desgastaram e como limpar essa ferida kármica de uma vez por todas.</span>
+          </div>
+        </div>
+
+        <div class="upsell-feature-item">
+          <div class="feature-icon">👁️</div>
+          <div class="feature-text">
+            <strong>3 Sinais Inconfundíveis de Reconhecimento</strong>
+            <span>Como identificar sem hesitar quando você estiver diante de uma conexão de alma verdadeira no seu dia a dia.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="price-box">
+        <div class="price-was">Valor normal: R$ 197,00</div>
+        <div class="price-now"><span class="currency">R$</span> 67,00</div>
+        <div class="price-installments">ou em até 3x de R$ 23,80 no cartão</div>
+      </div>
+
+      <!-- Botão de Compra do Upsell -->
+      <a id="acceptUpsellBtn" href="#" class="upsell-btn">
+        <span>SIM! QUERO ADICIONAR MEU MAPA DA ALMA GÊMEA POR R$ 67 →</span>
+      </a>
+
+      <!-- Botão de Recusa -> Leva para o Downsell -->
+      <div>
+        <a id="refuseUpsellBtn" href="downsell.html" class="refuse-link">
+          Não, prefiro abrir mão desta revelação e arriscar no amor sozinho…
+        </a>
+      </div>
+
+      <div class="security-note">
+        <span>🔒 Pagamento Criptografado • Acesso Imediato • Garantia Total de 7 Dias</span>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+  // CONFIGURAÇÃO DO CHECKOUT DO UPSELL
+  // Substitua pela URL do checkout do produto de Upsell na Kirvano:
+  const UPSELL_CHECKOUT_URL = 'https://pay.kirvano.com/61c98956-e40c-41cc-a0ff-5d3bdc316ce0'; // Altere para o link do Upsell
+  const LS = 'astral_profile';
+
+  function getProfile(){
+    try {
+      const d = localStorage.getItem(LS);
+      if(d) return JSON.parse(d);
+    } catch(_){}
+    return null;
+  }
+
+  (()=>{
+    const profile = getProfile();
+    const nameGreeting = document.getElementById('userNameGreeting');
+    const firstName = profile?.firstName || 'Você';
+    nameGreeting.textContent = firstName;
+
+    // Configurar link do botão com repasse de dados
+    const acceptBtn = document.getElementById('acceptUpsellBtn');
+    const url = new URL(UPSELL_CHECKOUT_URL, location.href);
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','src','sck'].forEach(k=>{
+      const v = new URLSearchParams(location.search).get(k);
+      if(v) url.searchParams.set(k, v);
+    });
+    if(profile?.email) url.searchParams.set('email', profile.email);
+    if(profile?.firstName) url.searchParams.set('name', profile.firstName);
+    acceptBtn.href = url.toString();
+
+    // Timer regressivo de 10 minutos
+    let sec = 599;
+    const timerEl = document.getElementById('countdown');
+    const interval = setInterval(()=>{
+      sec--;
+      if(sec <= 0){
+        clearInterval(interval);
+        timerEl.textContent = '00:00';
+        return;
+      }
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      timerEl.textContent = `${m}:${s}`;
+    }, 1000);
+
+    // Interceptar clique em recusar para repassar parâmetros
+    document.getElementById('refuseUpsellBtn').addEventListener('click', e=>{
+      e.preventDefault();
+      location.href = 'downsell.html' + location.search + location.hash;
+    });
+  })();
+  </script>
+</body>
+</html>
