@@ -30,8 +30,14 @@ Este arquivo é lido automaticamente pelo Antigravity em todas as sessões para 
 * **E-book Alma Gêmea:** `O_Mapa_da_Alma_Gemea_Mahila_Luz.pdf` (Guia de 7 capítulos sobre Casa 7, Vênus nos 4 elementos e cura de feridas amorosas).
 * **Portal da Alma Gêmea:** `alma-gemea.html` (Página online com leitura completa e botão de download do PDF).
 
-### 3. Blindagens de Segurança Ativas:
-* **Anti-Clonador:** Honeypot de checkout falso no HTML que é ignorado pelo JS e encaminha tráfego clonado para o rastreio `src=trafego_clonador_...`.
-* **Anti-Inspeção / F12:** Teclas F12, Ctrl+U e botão direito bloqueados (burlar apenas com `?debug=1`).
-* **Easter Egg do F12:** Hieróglifos ancestrais e puxão de orelha cômico para quem tentar burlar o borrado no HTML sem pagar.
-* **Zero Indexação:** `robots.txt` com `Disallow: /`, meta `noindex` em todas as páginas e `sitemap.xml` inexistente.
+---
+
+## 📐 Framework Central de Engenharia de Ofertas
+* **Linha de Montagem da Oferta:**  
+  `Demanda ➔ Desejo ➔ Problema ➔ Consciência ➔ Mecanismo ➔ Ângulo ➔ Promessa ➔ Oferta ➔ Criativo.`
+* **Fluxo de Mineração de Demanda:**  
+  1. *Biblioteca de Anúncios:* Identificar quais produtos já possuem tração e escala de anúncio.
+  2. *Comentários & Dúvidas:* Mapear o que o produto concorrente deixa sem resolver (ex: trava nas combinações, medo de errar tiragem).
+  3. *Mecanismo Descomplicado:* Não inventar a roda, mas empacotar o mesmo resultado de forma mais visual e rápida (ex: Atlas de Bolso / Cola rápida).
+  4. *Ângulo + Promessa:* Destacar a dor específica (Memorização, Combinações, Consulta, Segurança).
+  5. *MVP em 2 Camadas:* Validar com o Core enxuto antes de produzir 10 bônus.
