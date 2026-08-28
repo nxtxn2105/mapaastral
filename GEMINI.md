@@ -41,3 +41,19 @@ Este arquivo é lido automaticamente pelo Antigravity em todas as sessões para 
   3. *Mecanismo Descomplicado:* Não inventar a roda, mas empacotar o mesmo resultado de forma mais visual e rápida (ex: Atlas de Bolso / Cola rápida).
   4. *Ângulo + Promessa:* Destacar a dor específica (Memorização, Combinações, Consulta, Segurança).
   5. *MVP em 2 Camadas:* Validar com o Core enxuto antes de produzir 10 bônus.
+
+---
+
+## 🧠 Persuasão por Níveis de Consciência (Schwartz)
+* **Topo:** Responde *"Por que eu deveria me importar?"* ➔ Curiosidade, quebra de crença, identificação.
+* **Meio:** Responde *"Como eu resolvo isso?"* ➔ Novo mecanismo, método, o momento "Ahhh!".
+* **Fundo:** Responde *"Por que você?"* ➔ Prova social, demonstração, especificidade cirúrgica.
+* **Base:** Responde *"Por que agora?"* ➔ Oferta de alto valor, garantia e urgência.
+
+---
+
+## 🎯 Teste Controlado: Hook ≠ Ângulo
+* **Hook (Gancho):** Abertura de 3 segundos para parar o polegar.
+* **Ângulo:** A tese central que o anúncio defende (Tempo vs. Desorganização vs. Retenção).
+* **Teste de Hook:** Mesmo público + mesmo ângulo + mesmo corpo + ganchos diferentes.
+* **Teste de Ângulo:** Mesmo público + ângulos com teses e desenvolvimentos diferentes.
