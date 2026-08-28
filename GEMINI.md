@@ -57,3 +57,12 @@ Este arquivo é lido automaticamente pelo Antigravity em todas as sessões para 
 * **Ângulo:** A tese central que o anúncio defende (Tempo vs. Desorganização vs. Retenção).
 * **Teste de Hook:** Mesmo público + mesmo ângulo + mesmo corpo + ganchos diferentes.
 * **Teste de Ângulo:** Mesmo público + ângulos com teses e desenvolvimentos diferentes.
+
+---
+
+## 🏛️ Os 4 Caminhos de Modelagem (Escala de Risco)
+1. *Caminho 1 (Conservador):* Mantém Público + Ângulo. Muda Produto (Baralho Cigano ➔ Baralho do Zé Pilintra mantendo o foco em Consulta Rápida).
+2. *Caminho 2 (Intermediário):* Mantém Produto + Público. Muda o Ângulo (Aprender Significados ➔ Desvendar Combinações).
+3. *Caminho 3 (Intermediário):* Mantém Produto. Muda o Público (Quem tira para si ➔ Quem quer atender e cobrar).
+4. *Caminho 4 (Agressivo):* Muda Público + Ângulo (Maior distanciamento da demanda original, maior risco).
+* **Regra Fundamental:** *"Você não modela a copy. Você modela a hipótese de persuasão que está por trás da copy."*
