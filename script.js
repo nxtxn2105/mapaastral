@@ -246,7 +246,7 @@ function setupBackRedirect(){
     window.history.pushState({funnelStep:6},'');
     window.addEventListener('popstate',()=>{
       if(progressState.currentStep===6){
-        location.href='downsell.html'+location.search+location.hash;
+        location.href='resgate.html'+location.search+location.hash;
       }
     },{once:true});
   }catch(_){}

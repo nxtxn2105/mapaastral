@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <title>Condição Especial de Emergência • Mahila Luz</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .resgate-card { max-width: 580px; margin: 30px auto; background: rgba(22, 10, 44, .95); border: 2px solid #ef4444; border-radius: 24px; padding: 32px 24px; text-align: center; box-shadow: 0 15px 45px rgba(239, 68, 68, .25); backdrop-filter: blur(10px); }
+    .resgate-badge { display: inline-block; background: #ef4444; color: #fff; font-size: 12px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; padding: 6px 16px; border-radius: 30px; margin-bottom: 16px; }
+    .strike-price { font-size: 15px; color: #a99dbe; text-decoration: line-through; }
+    .big-price { font-size: clamp(42px, 8vw, 56px); font-weight: 900; color: #fff; line-height: 1.05; margin: 8px 0; }
+    .big-price span { color: var(--gold); font-size: 24px; }
+    .btn-resgate { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 20px 24px; font-size: 18px; font-weight: 900; background: linear-gradient(135deg, #10b981, #059669); color: #fff; border-radius: 16px; text-decoration: none; border: 0; cursor: pointer; box-shadow: 0 10px 30px rgba(16, 185, 129, .4); transition: transform .2s, box-shadow .2s; }
+    .btn-resgate:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(16, 185, 129, .5); }
+    .bump-callout { background: rgba(242, 202, 115, .08); border: 1px dashed rgba(242, 202, 115, .4); border-radius: 16px; padding: 14px; margin: 20px 0; text-align: left; font-size: 13px; color: #f5eedc; display: flex; gap: 12px; align-items: center; }
+  </style>
+</head>
+<body>
+<main class="app-shell" style="padding-top: 20px;">
+  <div class="resgate-card">
+    <span class="resgate-badge">⚠️ ESPERE! NÃO FECHE ESTA PÁGINA</span>
+    
+    <h1 style="font-size: clamp(22px, 5vw, 30px); color: #fff; margin: 6px 0 12px;">
+      <span id="buyerName">Você</span>, não saia sem a sua leitura astrológica!
+    </h1>
+
+    <p style="color: #d8cee8; font-size: 14.5px; line-height: 1.55; margin-bottom: 20px;">
+      Nós entendemos que a situação financeira pode estar apertada hoje. A Mahila liberou uma <strong>bolsa de auxílio simbólica</strong> para custear apenas o processamento do servidor:
+    </p>
+
+    <div style="background: rgba(0,0,0,.35); border: 1px solid var(--line); border-radius: 20px; padding: 20px; margin-bottom: 20px;">
+      <div class="strike-price">De R$ 19,90 por apenas:</div>
+      <div class="big-price"><span>R$</span> 9,90</div>
+      <div style="font-size: 13px; color: var(--gold); font-weight: 700;">Pagamento único • Acesso Completo aos 7 Capítulos</div>
+    </div>
+
+    <!-- Destaque do Order Bump no Checkout -->
+    <div class="bump-callout">
+      <div style="font-size: 24px;">🎁</div>
+      <div>
+        <strong style="color: var(--gold); display: block;">Dica de Ouro no Checkout:</strong>
+        Você ainda poderá adicionar o <em>E-book dos Rituais Lunares & Áudio 432Hz</em> na caixinha de seleção antes de finalizar!
+      </div>
+    </div>
+
+    <a id="resgateCheckoutBtn" href="https://pay.kirvano.com/61c98956-e40c-41cc-a0ff-5d3bdc316ce0?src=salva_clique_990" class="btn-resgate pulse-glow">
+      QUERO MEU MAPA POR APENAS R$ 9,90 →
+    </a>
+
+    <div style="font-size: 11.5px; color: #9f95b6; margin-top: 14px;">
+      🔒 Liberação Imediata na Tela • Garantia Incondicional de 7 Dias • SSL Seguro
+    </div>
+
+    <div style="margin-top: 24px;">
+      <a href="index.html" style="font-size: 12px; color: #7f7498; text-decoration: underline;">
+        Não quero aproveitar o desconto e desejo abrir mão da minha leitura
+      </a>
+    </div>
+  </div>
+</main>
+
+<script>
+  try {
+    const data = JSON.parse(localStorage.getItem('astral_funnel_state') || '{}');
+    if (data.firstName) {
+      document.getElementById('buyerName').textContent = data.firstName;
+    }
+  } catch (_) {}
+</script>
+</body>
+</html>
