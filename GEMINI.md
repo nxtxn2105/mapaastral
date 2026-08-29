@@ -14,6 +14,7 @@ Este arquivo é lido automaticamente pelo Antigravity em todas as sessões para 
 ## 🚀 Arquitetura Oficial do Funil Mahila Luz
 * **Repositório GitHub:** `https://github.com/nxtxn2105/mapaastral`
 * **URL de Produção na Vercel:** `https://mapa-astral-oficial.vercel.app/`
+* **Meta Pixel ID Oficial:** `1439075064947982` (configurado em todas as páginas com PageView, InitiateCheckout e Purchase)
 
 ### 1. Esteira de Produtos & Preços (Gateway Oficial: Lowify):
 * **Front-End Principal (R$ 19,90):** `index.html` ➔ Checkout oficial: `https://pay.lowify.com.br/checkout?product_id=oNfku1` (com pitch aos 8m36s, urgência 15min, prova social toaster, micro-selo de 18.400 leituras, botões pulse-glow).
