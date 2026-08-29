@@ -63,7 +63,7 @@ const b64ToUtf8 = str => decodeURIComponent(escape(atob(str)));
 
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200);}
 function saveProgress(){try{localStorage.setItem(CONFIG.progressKey,JSON.stringify(progressState));}catch(_){}}
-function go(step,opts={}){progressState.currentStep=step;$$('.step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===step));$('#progressBar').style.width=`${Math.max(7,(step+1)/7*100)}%`;saveProgress();persist();if(!opts.noScroll)window.scrollTo({top:0,behavior:opts.instant?'auto':'smooth'});}
+function go(step,opts={}){progressState.currentStep=step;$$('.step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===step));$('#progressBar').style.width=`${Math.max(7,(step+1)/7*100)}%`;saveProgress();persist();if(step===6){try{if(window.fbq)fbq('track','ViewContent',{content_name:'Pitch Mapa Astral',value:19.90,currency:'BRL'});}catch(_){}}if(!opts.noScroll)window.scrollTo({top:0,behavior:opts.instant?'auto':'smooth'});}
 function profileForStorage(){return{v:2,birth:state.birth,sign:state.sign,moon:state.moon,firstName:state.firstName,gender:state.gender,timeKnown:state.timeKnown,birthTime:state.birthTime,birthCity:state.birthCity,birthState:state.birthState,birthCountry:state.birthCountry,email:state.email};}
 function persist(){try{localStorage.setItem(CONFIG.localStorageKey,JSON.stringify(profileForStorage()));}catch(_){}saveProgress();return Promise.resolve();}
 function restore(){try{const d=localStorage.getItem(CONFIG.localStorageKey);if(d)Object.assign(state,JSON.parse(d));}catch(_){}try{const d=localStorage.getItem(CONFIG.progressKey);if(d){const p=JSON.parse(d);progressState.currentStep=Number(p.currentStep)||0;if(p.audio)Object.keys(progressState.audio).forEach(id=>{if(p.audio[id])Object.assign(progressState.audio[id],p.audio[id]);});}}catch(_){}}
@@ -159,6 +159,7 @@ function dispatchLead(email,name,sign,moon){
     localStorage.setItem('astral_leads',JSON.stringify(leads));
   }catch(_){}
   try{window.dispatchEvent(new CustomEvent('funnel_lead',{detail:{email,name,sign:sign?.name,moon:moon?.name}}));}catch(_){}
+  try{if(window.fbq) fbq('track', 'Lead', {content_name: 'Mapa Astral Personalizado'});}catch(_){}
   if(CONFIG.webhookUrl){
     try{fetch(CONFIG.webhookUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,name,sign:sign?.name,moon:moon?.name,timestamp:Date.now()})}).catch(()=>{});}catch(_){}
   }
