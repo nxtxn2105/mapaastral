@@ -222,8 +222,8 @@ $('#checkoutButton').addEventListener('click',async()=>{
     url.searchParams.set('src', 'trafego_clonador_' + currentHost.replace(/[^a-z0-9]/gi,'_'));
   }
   if(state.email) url.searchParams.set('email',state.email);
-  if(state.firstName) url.searchParams.set('name',state.firstName);
   try{window.dispatchEvent(new CustomEvent('funnel_initiate_checkout',{detail:{email:state.email,name:state.firstName}}));}catch(_){}
+  try{if(window.fbq) fbq('track', 'InitiateCheckout', {value: 19.90, currency: 'BRL'});}catch(_){}
   window.location.href=url.toString();
 });
 

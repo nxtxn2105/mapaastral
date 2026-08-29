@@ -16,6 +16,24 @@
     .btn-resgate:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(16, 185, 129, .5); }
     .bump-callout { background: rgba(242, 202, 115, .08); border: 1px dashed rgba(242, 202, 115, .4); border-radius: 16px; padding: 14px; margin: 20px 0; text-align: left; font-size: 13px; color: #f5eedc; display: flex; gap: 12px; align-items: center; }
   </style>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1439075064947982');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1439075064947982&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
 <main class="app-shell" style="padding-top: 20px;">
@@ -68,6 +86,10 @@
       document.getElementById('buyerName').textContent = data.firstName;
     }
   } catch (_) {}
+
+  document.getElementById('resgateCheckoutBtn').addEventListener('click', function() {
+    try { if (window.fbq) fbq('track', 'InitiateCheckout', {value: 9.90, currency: 'BRL'}); } catch (_) {}
+  });
 </script>
 </body>
 </html>
