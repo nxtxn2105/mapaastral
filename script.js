@@ -28,7 +28,7 @@ if (!isAuthorized) {
   );
 }
 
-const CONFIG={checkoutUrl:'https://pay.kirvano.com/61c98956-e40c-41cc-a0ff-5d3bdc316ce0',localStorageKey:'astral_profile',progressKey:'astral_progress_v2',successPage:'confirmacao.html',webhookUrl:''};
+const CONFIG={checkoutUrl:'https://pay.lowify.com.br/checkout?product_id=oNfku1',localStorageKey:'astral_profile',progressKey:'astral_progress_v2',successPage:'confirmacao.html',webhookUrl:''};
 const state={birth:null,sign:null,moon:null,firstName:'',gender:null,timeKnown:null,birthTime:'',birthCity:'',birthState:'',birthCountry:'Brasil',email:''};
 const progressState={currentStep:0,audio:{signAudio:{time:0,completed:false},moonAudio:{time:0,completed:false},genderAudio:{time:0,completed:false},finalAudio:{time:0,completed:false}}};
 

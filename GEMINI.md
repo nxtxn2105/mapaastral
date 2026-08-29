@@ -15,13 +15,12 @@ Este arquivo é lido automaticamente pelo Antigravity em todas as sessões para 
 * **Repositório GitHub:** `https://github.com/nxtxn2105/mapaastral`
 * **URL de Produção na Vercel:** `https://mapa-astral-oficial.vercel.app/`
 
-### 1. Esteira de Produtos & Preços:
-* **Front-End Principal (R$ 19,90):** `index.html` ➔ Leitura guiada em áudio com pitch aos 8m36s, 5 aceleradores de conversão (urgência 15min, prova social toaster, micro-selo de 18.400 leituras, botões pulse-glow, pergunta psicológica de e-mail).
-* **Salva-Clique / Downsell de Saída (R$ 9,90):** `resgate.html` ➔ Ativado via back-redirect ou tentativa de saída na Etapa 6 para pagar o custo por clique do tráfego. O checkout também oferece o Order Bump.
-* **Order Bump (R$ 14,90):** Caixinha no checkout principal e de saída. Entrega o E-book `O_Guia_dos_Rituais_Lunares_Mahila_Luz.pdf` + Áudio `Frequencia_Lunar_432Hz_Mahila_Luz.mp3`.
-* **Upsell 1 (R$ 67,00):** `upsell.html` ➔ O Mapa da Alma Gêmea & Sinastria de Vênus com timer de 10 min.
-* **Downsell 1 (R$ 27,00 / R$ 37,00):** `downsell.html` ➔ 50% de desconto na Alma Gêmea para quem recusar o upsell.
-* **Confirmação & Resiliência:** `confirmacao.html` ➔ Salva estado permanente e recupera compras feitas em outros navegadores/dispositivos.
+### 1. Esteira de Produtos & Preços (Gateway Oficial: Lowify):
+* **Front-End Principal (R$ 19,90):** `index.html` ➔ Checkout oficial: `https://pay.lowify.com.br/checkout?product_id=oNfku1` (com pitch aos 8m36s, urgência 15min, prova social toaster, micro-selo de 18.400 leituras, botões pulse-glow).
+* **Salva-Clique / Downsell de Saída (R$ 9,90):** `resgate.html` ➔ Checkout oficial: `https://pay.lowify.com.br/checkout?product_id=Mxqb8C` (ativado via back-redirect ou intenção de saída na Etapa 6).
+* **Order Bump 1 (R$ 14,90):** `rQwdUH` (O Guia dos Rituais Lunares & Áudio 432Hz).
+* **Order Bump 2 (R$ 14,90):** `VIQYq4` (O Mapa da Alma Gêmea & Sinastria).
+* **Confirmação & Destravamento Automático:** `confirmacao.html` ➔ Redireciona e destrava a leitura no `mapa.html?pago=1` em 800ms.
 
 ### 2. Entregáveis Reais Físicos e Online:
 * **Mapa Astral Completo:** Gerador dinâmico de PDF A4 diagramado na tela `mapa.html?pago=1` com 7 capítulos, cálculo de ascendente e mandala SVG.
