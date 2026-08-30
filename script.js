@@ -63,7 +63,7 @@ const b64ToUtf8 = str => decodeURIComponent(escape(atob(str)));
 
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200);}
 function saveProgress(){try{localStorage.setItem(CONFIG.progressKey,JSON.stringify(progressState));}catch(_){}}
-function go(step,opts={}){progressState.currentStep=step;$$('.step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===step));$('#progressBar').style.width=`${Math.max(7,(step+1)/7*100)}%`;saveProgress();persist();if(step===6){try{if(window.fbq)fbq('track','ViewContent',{content_name:'Pitch Mapa Astral',value:19.90,currency:'BRL'});}catch(_){}}if(!opts.noScroll)window.scrollTo({top:0,behavior:opts.instant?'auto':'smooth'});}
+function go(step,opts={}){progressState.currentStep=step;$$('.step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===step));$('#progressBar').style.width=`${Math.max(7,(step+1)/7*100)}%`;saveProgress();persist();if(step===6){$('#offerBox')?.classList.remove('hidden');if($('#offerHint'))$('#offerHint').style.display='none';startOfferCountdown();try{if(window.fbq)fbq('track','ViewContent',{content_name:'Pitch Mapa Astral',value:19.90,currency:'BRL'});}catch(_){}}if(!opts.noScroll)window.scrollTo({top:0,behavior:opts.instant?'auto':'smooth'});}
 function profileForStorage(){return{v:2,birth:state.birth,sign:state.sign,moon:state.moon,firstName:state.firstName,gender:state.gender,timeKnown:state.timeKnown,birthTime:state.birthTime,birthCity:state.birthCity,birthState:state.birthState,birthCountry:state.birthCountry,email:state.email};}
 function persist(){try{localStorage.setItem(CONFIG.localStorageKey,JSON.stringify(profileForStorage()));}catch(_){}saveProgress();return Promise.resolve();}
 function restore(){try{const d=localStorage.getItem(CONFIG.localStorageKey);if(d)Object.assign(state,JSON.parse(d));}catch(_){}try{const d=localStorage.getItem(CONFIG.progressKey);if(d){const p=JSON.parse(d);progressState.currentStep=Number(p.currentStep)||0;if(p.audio)Object.keys(progressState.audio).forEach(id=>{if(p.audio[id])Object.assign(progressState.audio[id],p.audio[id]);});}}catch(_){}}
@@ -127,6 +127,13 @@ $('#birthForm').addEventListener('submit',async e=>{
   ['signAudio','moonAudio','genderAudio','finalAudio'].forEach(id=>progressState.audio[id]={time:0,completed:false});lockedPlayers.get('signAudio').reset(false);await persist();go(1);
 });
 
+$('#signAudio').addEventListener('timeupdate',()=>{
+  if($('#signAudio').currentTime>=6){ const b=$('#signSkipBtn'); if(b) b.style.display='block'; }
+});
+$('#signSkipBtn')?.addEventListener('click',()=>{
+  $('#moonName').textContent=state.moon.name; $('#moonSymbol').textContent=state.moon.symbol; $('#moonAudioLabel').textContent=`Selecionada: ${state.moon.name}`; $('#moonAudio').src=`assets/audio/${state.moon.file}`; lockedPlayers.get('moonAudio').reset();
+  go(2);
+});
 $('#signAudio').addEventListener('play',()=>$('#signUnlock').textContent='Sua leitura está sendo reproduzida…');
 $('#signAudio').addEventListener('ended',()=>{
   $('#signUnlock').textContent='Leitura concluída. Abrindo a próxima parte…';
@@ -134,6 +141,10 @@ $('#signAudio').addEventListener('ended',()=>{
   setTimeout(()=>go(2),650);
 });
 
+$('#moonAudio').addEventListener('timeupdate',()=>{
+  if($('#moonAudio').currentTime>=6){ const b=$('#moonSkipBtn'); if(b) b.style.display='block'; }
+});
+$('#moonSkipBtn')?.addEventListener('click',()=>go(3));
 $('#moonAudio').addEventListener('play',()=>$('#moonUnlock').textContent='Sua leitura lunar está sendo reproduzida…');
 $('#moonAudio').addEventListener('ended',()=>{ $('#moonUnlock').textContent='Leitura concluída. Abrindo a próxima parte…'; setTimeout(()=>go(3),650); });
 
@@ -149,6 +160,10 @@ $('#profileForm').addEventListener('submit',async e=>{
   $('#nameGreeting').textContent=state.firstName; $('#genderAudio').src=state.gender==='f'?'assets/audio/p3-m-60-s.mp3':'assets/audio/p3-h-60-s.mp3'; progressState.audio.genderAudio={time:0,completed:false};progressState.audio.finalAudio={time:0,completed:false};lockedPlayers.get('genderAudio').reset(false);await persist();go(4);
 });
 
+$('#genderAudio').addEventListener('timeupdate',()=>{
+  if($('#genderAudio').currentTime>=6){ const b=$('#genderSkipBtn'); if(b) b.style.display='block'; }
+});
+$('#genderSkipBtn')?.addEventListener('click',()=>go(5));
 $('#genderAudio').addEventListener('play',()=>$('#genderUnlock').textContent='Sua leitura está sendo reproduzida…');
 $('#genderAudio').addEventListener('ended',()=>{ $('#genderUnlock').textContent='Leitura concluída. Abrindo a próxima parte…'; setTimeout(()=>go(5),650); });
 
@@ -204,15 +219,16 @@ function startOfferCountdown(){
 $('#finalAudio').addEventListener('timeupdate',e=>{
   const t=e.target.currentTime; let file='mapa-astral.png'; for(const [sec,img] of visualTimeline){if(t>=sec)file=img;else break;}
   if(file!==lastVisual){ lastVisual=file; $('#offerVisual').style.opacity='.25'; setTimeout(()=>{$('#offerVisual').src=`assets/img/${file}`;$('#offerVisual').style.opacity='1';},130); }
-  // Desbloqueio antecipado no momento em que o preço promocional surge no áudio (516s)
-  if(t>=516 || progressState.audio.finalAudio.completed){
-    $('#offerBox').classList.remove('hidden');
-    $('#offerHint').classList.add('hidden');
-    startOfferCountdown();
-  }
+  $('#offerBox').classList.remove('hidden');
+  if($('#offerHint')) $('#offerHint').style.display='none';
+  startOfferCountdown();
 });
-$('#finalAudio').addEventListener('play',()=>$('#offerHint').textContent='Continue ouvindo. A oferta especial será liberada durante a análise.');
-$('#finalAudio').addEventListener('ended',()=>{ $('#offerBox').classList.remove('hidden'); $('#offerHint').classList.add('hidden'); startOfferCountdown(); });
+$('#finalAudio').addEventListener('play',()=>{
+  $('#offerBox').classList.remove('hidden');
+  if($('#offerHint')) $('#offerHint').style.display='none';
+  startOfferCountdown();
+});
+$('#finalAudio').addEventListener('ended',()=>{ $('#offerBox').classList.remove('hidden'); if($('#offerHint')) $('#offerHint').style.display='none'; startOfferCountdown(); });
 
 $('#checkoutButton').addEventListener('click',async()=>{
   await persist();
